@@ -177,7 +177,7 @@ function abrirSidebar() {
                 <th>Data</th>
                 <th>Nome do Staff</th>
                 <th>Email do Staff</th>
-                <th class="ações">Ações</th>
+                <th class="no-print ações">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -190,7 +190,7 @@ function abrirSidebar() {
                     echo "<td>" . htmlspecialchars($row['staff_nome']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['staff_email']) . "</td>";
                     echo "<td class='action'>
-                    <button class='no-print print-button' onclick='printRow(" . $row['evento_id'] . ")'>
+                    <button class='no-print print-button' onclick='print()'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-printer' viewBox='0 0 16 16'>
                             <path d='M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1'/>
                             <path d='M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1'/>
@@ -207,7 +207,7 @@ function abrirSidebar() {
     </table>
 
     <!-- Links de navegação para paginação -->
-    <div class="pagination">
+    <div class="no-print pagination">
         <?php
         for ($i = 1; $i <= $total_paginas; $i++) {
             echo "<a href='?pagina=$i'";
@@ -217,92 +217,6 @@ function abrirSidebar() {
         ?>
     </div>
 </section>
-
-<script>
- function printRow(rowId) {
-    // Copia a linha selecionada para uma nova área de impressão temporária
-    let row = document.getElementById('row-' + rowId);
-    let cells = row.getElementsByTagName('td');
-
-    // Extraindo os dados das células (removendo o ID e o botão de ação)
-    let evento = cells[0].innerText; // Nome do evento
-    let nomeStaff = cells[1].innerText; // Nome do staff
-    let emailStaff = cells[2].innerText; // E-mail do staff
-    let dataEvento = cells[3].innerText; // Data do evento
-
-    // Oculta os botões de ação na linha selecionada antes de imprimir
-    let botoes = row.querySelectorAll('.action button');
-    botoes.forEach(function(botao) {
-        botao.style.display = 'none'; // Oculta os botões
-    });
-
-    // Cria o conteúdo de impressão manualmente
-    let printContent = `
-      <html>
-      <head>
-        <title>Relatório de Staff por Evento</title>
-        <style>
-          body { font-family: Arial, sans-serif; font-size: 14px; }
-          table { width: 100%; border-collapse: collapse; }
-          table th, table td { padding: 8px; text-align: left; border: 1px solid #ddd; }
-          table th { background-color: #f4f4f4; }
-        </style>
-      </head>
-      <body>
-        <h1>Staff por Evento</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Evento</th>
-              <th>Data</th>
-              <th>Nome do Staff</th>
-              <th>Email do Staff</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>${evento}</td>
-              <td>${dataEvento}</td>
-              <td>${nomeStaff}</td>
-              <td>${emailStaff}</td>
-            </tr>
-          </tbody>
-        </table>
-      </body>
-      </html>
-    `;
-
-    // Cria um iframe invisível no documento
-    let iframe = document.createElement('iframe');
-    iframe.style.position = 'absolute';
-    iframe.style.width = '0';
-    iframe.style.height = '0';
-    iframe.style.border = 'none';
-    document.body.appendChild(iframe);
-
-    // Escreve o conteúdo da impressão no iframe
-    let doc = iframe.contentWindow.document;
-    doc.open();
-    doc.write(printContent);
-    doc.close();
-
-    // Executa a impressão diretamente no iframe
-    iframe.contentWindow.focus();
-    iframe.contentWindow.print();
-
-    // Remove o iframe após a impressão
-    document.body.removeChild(iframe);
-
-    // Restaura a exibição dos botões de ação após a impressão
-    botoes.forEach(function(botao) {
-        botao.style.display = ''; // Restaura a visibilidade dos botões
-    });
-}
-
-
-</script>
-
-
 
 </body>
 </html>
