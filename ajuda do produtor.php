@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGE - Ajuda</title>
+    <link rel="stylesheet" href="ajuda do produtor.css">
+    
+</head>
+
+<body>
+   
+        
+<div id="header"></div> <!-- Div onde o menu será injetado -->
+
+<script>
+  fetch('/menu principal.php')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header').innerHTML = data;
+    })
+    .catch(error => console.error('Erro ao carregar o menu:', error));
+</script>
+
+<div class="content">
+  <!-- Conteúdo da página -->
+</div>
+
+<script> 
+    // Função para abrir a sidebar
+    function abrirSidebar() {
+     document.getElementById("mySidebar").style.width = "250px";
+   }
+   
+   // Função para fechar a sidebar
+   function fecharSidebar() {
+     document.getElementById("mySidebar").style.width = "0";
+   }
+   
+   // Função para abrir a sidebar
+   function abrirSidebar() {
+     // Se for um dispositivo móvel, ocupa 100% da tela; caso contrário, 250px
+     if (window.innerWidth <= 768) {
+         document.getElementById("mySidebar").style.width = "100%";
+     } else {
+         document.getElementById("mySidebar").style.width = "310px";
+     }
+   }
+   
+   // Função para fechar a sidebar
+   function fecharSidebar() {
+     document.getElementById("mySidebar").style.width = "0";
+   }
+   </script>
+
+
+<script>
+  // Função para mostrar/ocultar a lista suspensa do perfil
+  function toggle() {
+      var profileDropdownList = document.querySelector('.profile-dropdown-list');
+      profileDropdownList.classList.toggle('active');
+  }
+
+  // Função para mostrar o modal de logout
+  function showLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'flex';
+  }
+
+  // Função para fechar qualquer modal
+  function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+  }
+
+  // Função para confirmar o logout e mostrar o modal de agradecimento
+  function confirmLogout() {
+      closeModal('logoutModal'); // Fecha o modal de logout
+      document.getElementById('thankYouModal').style.display = 'flex'; // Mostra o modal de agradecimento
+      
+      // Redireciona após alguns segundos (opcional)
+      setTimeout(function() {
+          window.location.href = 'index.php'; // Redireciona para a página inicial
+      }, 2000); // Aguarda 2 segundos antes de redirecionar
+  }
+</script>
+
+
+
+<div class="agenda-evento">
+    <div class="conteudo">
+
+
+        <a href="ambiente.php" class="close-btn-ajuda">&times;</a>
+        <div class="help-container">
+                <h1 class="Ajuda">Ajuda</h1>
+                <p>Bem-vindo ao Sistema de Gestão de Eventos (SGE). Aqui estão as instruções para ajudá-lo a gerenciar seus eventos de forma eficaz.</p>
+
+                <!-- Gerenciamento de Eventos -->
+                <div class="help-section">
+                    <button class="help-title">Como Criar um Evento?</button>
+                    <div class="help-content">
+                        <p>Para criar um evento, acesse o menu lateral e clique na seção "Evento", nele vc terá uma lista de eventos e acesse "Adicionar Novo Evento", preencha os campos obrigatórios como nome, data, local, etc., e clique em "Cadastrar".</p>
+                    </div>
+                </div>
+
+                <!-- Adicionar Buffet -->
+                <div class="help-section">
+                    <button class="help-title">Como Adicionar um Buffet ao Evento?</button>
+                    <div class="help-content">
+                        <p>Acesse o menu, e vá na seção "Buffet" você terá uma lista de buffets associadas ao evento . Na lista, vai em "Adicionar Novo Buffet" e preencha os campos com a opção desejada. O buffet será cadastrado e vinculado ao evento na tabela.</p>
+                    </div>
+                </div>
+
+                <!-- Adicionar Staff -->
+                <div class="help-section">
+                    <button class="help-title">Como Adicionar um Staff ao Evento?</button>
+                    <div class="help-content">
+                        <p>Você pode associar membros da equipe (staff) ao evento durante o cadastro. Clique em "Adicionar Staff", selecione o membro desejado e defina suas responsabilidades.</p>
+                    </div>
+                </div>
+
+                <!-- Adicionar Objetivos -->
+                <div class="help-section">
+                    <button class="help-title">Como Definir Objetivos para o Evento?</button>
+                    <div class="help-content">
+                        <p>Na seção "Objetivos", você pode especificar as metas e resultados desejados para o evento. Defina os objetivos antes de salvar o evento.</p>
+                    </div>
+                </div>
+
+                <!-- Adicionar Imagens -->
+                <div class="help-section">
+                    <button class="help-title">Como Adicionar Imagens ao Evento?</button>
+                    <div class="help-content">
+                        <p>Para adicionar imagens, vá até a seção de "Adicionar Novo Evento" e lá você terá a opção de "Imagem do evento" selecione as fotos que deseja associar. As imagens serão exibidas na lista de eventos.</p>
+                    </div>
+                </div>
+
+                <!-- Visualizar Relatório -->
+                <div class="help-section">
+                    <button class="help-title">Como Visualizar o Relatórios?</button>
+                    <div class="help-content">
+                        <p>Acesse o relatório de eventos para visualizar todas as informações de seus eventos, como data, local, staff, buffet e objetivos associados.</p>
+                    </div>
+                </div>
+
+                <!-- Editar e Excluir Eventos -->
+                <div class="help-section">
+                    <button class="help-title">Como Editar ou Excluir um Evento?</button>
+                    <div class="help-content">
+                        <p>Para editar um evento, clique no evento desejado na lista de eventos e selecione "Editar". Para excluir, clique em "Excluir" no evento que deseja remover.</p>
+                    </div>
+                </div>
+
+                <!-- Reportar Problemas -->
+              <div class="help-section">
+                  <button class="help-title">Como Reportar Problemas?</button>
+                  <div class="help-content">
+                      <p>Para reportar problemas, acesse o menu lateral e clique na opção "Reportar Problema". Nele você verá um relatório com as informações de um evento com o problema ocorrido em seguida, clique em "Reportar Problemas" Preencha o formulário com detalhes sobre o erro ou situação encontrada e clique em "Enviar". Nossa equipe analisará sua solicitação.</p>
+                  </div>
+              </div>
+
+              <!-- Redefinir Senha -->
+              <div class="help-section">
+                  <button class="help-title">Como Redefinir a Senha?</button>
+                  <div class="help-content">
+                      <p>Se você esquecer sua senha, clique em "Esqueceu a senha?" na página de login. Insira o e-mail cadastrado e siga as instruções enviadas para redefinir sua senha. Caso seja produtor, vá até o perfil e escolha "Alterar Senha".</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+   </section>
+
+    <script src="ajuda.js"> </script>
+</body>
+</html>
