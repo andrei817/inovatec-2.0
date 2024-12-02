@@ -166,7 +166,7 @@ function abrirSidebar() {
 
         <div class="input-group">
         <label for="descricao_problema">Descrição do Problema:</label>
-        <textarea id="descricao_problema" name="descricao_problema" rows="5" required placeholder="Descreva o problema aqui..."></textarea>
+        <textarea id="descricao_problema" name="descricao_problema" rows="5" class="inputUser required placeholder="Descreva o problema aqui..."></textarea>
         </div>
 
         <div class="input-group">
