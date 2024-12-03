@@ -1,0 +1,3 @@
+ALTER DATABASE `sua_base` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; 
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
