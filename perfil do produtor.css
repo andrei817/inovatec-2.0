@@ -266,7 +266,7 @@ nav ul li a:hover::after {
     position: relative; 
     right: -190px; 
     width: 20%;
-    top: 45px;
+    top: -35px;
     padding: 10px; 
     background-color: #0db400;
     color: #fff;
@@ -293,11 +293,11 @@ nav ul li a:hover::after {
     background-color: #4bd641;
 }
 
-.Cancel-btn {
+.Cancel-btn-alt {
     position: relative; 
     right: -200px; 
     width: 20%;
-    top: 65px;
+    top: -35px;
     padding: 10px; 
     background-color: rgba(206, 35, 35, 0.89);
     color: #fff;
@@ -313,14 +313,14 @@ nav ul li a:hover::after {
 
 
 }
-.Cancel-btn:active{
+.Cancel-btn-alt:active{
 
     box-shadow: 0px 2px 0px ,  #bd1010 /* Sombra ao pressionar, simulando o botão "afundar" */
                 0px 4px 10px rgba(0, 0, 0, 0.2);
     transform: translateY(3px);        /* Move o botão para baixo */
 }
 
-.Cancel-btn:hover {
+.Cancel-btn-alt:hover {
     background-color: #f53e3e;
 }
 
