@@ -35,6 +35,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="ico/SGE.ico" type="image/x-icon">
     <link rel="stylesheet" href="reporte de problemas.css">
     <title>Reportar Problema</title>
 
@@ -57,8 +58,7 @@ $conn->close();
 </div>
 
 <script> 
-// Função para abrir a sidebar
-function abrirSidebar() {
+  function abrirSidebar() {
     if (window.innerWidth <= 768) {
       document.getElementById("mySidebar").style.width = "100%";
     } else {
@@ -166,11 +166,11 @@ function abrirSidebar() {
 
         <div class="input-group">
         <label for="descricao_problema">Descrição do Problema:</label>
-        <textarea id="descricao_problema" name="descricao_problema" rows="5" class="inputUser required placeholder="Descreva o problema aqui..."></textarea>
+        <textarea id="descricao_problema" name="descricao_problema" rows="2" class="inputUser" required placeholder="Descreva o problema aqui..."></textarea>
         </div>
 
         <div class="input-group">
-        <label for="contato">Contato (E-mail ou Telefone):</label>
+        <label for="contato">E-mail :</label>
         <input type="text" id="contato" name="contato" required placeholder="Digite seu e-mail ou telefone">
         </div>
 
@@ -239,6 +239,21 @@ function fecharSidebar() {
         }, 3000); // Fecha automaticamente após 3 segundos
     <?php endif; ?>
 </script>
+
+
+<script>
+  
+    document.getElementById('evento_id').addEventListener('change', function() {
+        var eventoSelect = this;
+        var dataEvento = eventoSelect.options[eventoSelect.selectedIndex].getAttribute('data-data_evento');
+        
+        // Preencher o campo data_evento com a data associada ao evento selecionado
+        if (dataEvento) {
+            document.getElementById('data_evento').value = dataEvento;
+        }
+    });
+</script>
+
 
 
 </body>
