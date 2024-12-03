@@ -41,7 +41,7 @@ mysqli_close($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="ico/SGE.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="ico/SGE.ico" type="image/x-icon">
     <link rel="stylesheet" href="edit.css">
     <title>Editar Produtor</title>
 </head>
@@ -62,8 +62,69 @@ mysqli_close($conn);
   <!-- Conteúdo da página -->
 </div>
 
+<script> 
+    // Função para abrir a sidebar
+    function abrirSidebar() {
+     document.getElementById("mySidebar").style.width = "250px";
+   }
+   
+   // Função para fechar a sidebar
+   function fecharSidebar() {
+     document.getElementById("mySidebar").style.width = "0";
+   }
+   
+   // Função para abrir a sidebar
+   function abrirSidebar() {
+     // Se for um dispositivo móvel, ocupa 100% da tela; caso contrário, 250px
+     if (window.innerWidth <= 768) {
+         document.getElementById("mySidebar").style.width = "100%";
+     } else {
+         document.getElementById("mySidebar").style.width = "310px";
+     }
+   }
+   
+   // Função para fechar a sidebar
+   function fecharSidebar() {
+     document.getElementById("mySidebar").style.width = "0";
+   }
+   </script>
+
+
+<script>
+  // Função para mostrar/ocultar a lista suspensa do perfil
+  function toggle() {
+      var profileDropdownList = document.querySelector('.profile-dropdown-list');
+      profileDropdownList.classList.toggle('active');
+  }
+
+  // Função para mostrar o modal de logout
+  function showLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'flex';
+  }
+
+  // Função para fechar qualquer modal
+  function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+  }
+
+  // Função para confirmar o logout e mostrar o modal de agradecimento
+  function confirmLogout() {
+      closeModal('logoutModal'); // Fecha o modal de logout
+      document.getElementById('thankYouModal').style.display = 'flex'; // Mostra o modal de agradecimento
+      
+      // Redireciona após alguns segundos (opcional)
+      setTimeout(function() {
+          window.location.href = 'index.php'; // Redireciona para a página inicial
+      }, 2000); // Aguarda 2 segundos antes de redirecionar
+  }
+</script>
+
+
+
 <section class="agenda-evento">
     <div class="conteudo">
+    </div>
+
         <section class="login-section"> 
             <div class="login-box"> 
                 <h1>Editar Produtor</h1>
@@ -105,6 +166,7 @@ mysqli_close($conn);
                    </div>
 
                    <button type="submit" class="login-btn-edit">Salvar</button>
+                   <a href="listar produtores.php"><button type="button" class="Cancel-btn-edit">Cancelar</button></a>
                 </form>
             </div>
         </section>
