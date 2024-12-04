@@ -3,7 +3,7 @@ session_start();
 include("php/Config.php");
 
 // Definir o número de registros por página
-$registros_por_pagina = 3;
+$registros_por_pagina = 8;
 
 // Determinar a página atual (padrão: 1)
 $pagina_atual = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
