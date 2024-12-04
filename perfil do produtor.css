@@ -209,7 +209,7 @@ nav ul li a:hover::after {
     border-radius: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     width: 700px;
-    height: 400px;
+    height: 468px;
     text-align: center;
     background-color: rgb(23, 0, 155);
     
@@ -220,7 +220,7 @@ nav ul li a:hover::after {
 .fecha-btn {
     position: relative; /* Posiciona o botão de fechar */
     top: -140px; /* Distância do topo */
-    right: -360px; /* Distância da direita */
+    right: -680px; /* Distância da direita */
     font-size: 35px; /* Tamanho da fonte */
     color: rgb(243, 243, 243); /* Cor do botão */
     cursor: pointer; /* Muda o cursor ao passar o mouse */
@@ -235,30 +235,33 @@ nav ul li a:hover::after {
     cursor: pointer; /* Muda o cursor ao passar o mouse */
 }
 
-
-.input-group {
-    margin-bottom: 2px;
-    text-align: right;
-    
+.input-group-prod {
+    display: inline-flex; /* Usando flexbox para centralizar os itens */
+    flex-direction: column; /* Alinha os itens em coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    margin-bottom: 25px;
+    width: 30%;
+    justify-content: flex-start;
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
 }
 
-.input-group label {
-    display: block;
-    margin-bottom: 13px;
-    border-radius: 10px;
+.input-group-prod label {
     color: rgb(255, 255, 255);
-    position: sticky;
+    font-size: 16px;
+    margin-bottom: 5px; /* Espaço entre o label e o input */
+    width: 100%; /* O label ocupa toda a largura disponível */
     
-   
 }
 
-.input-group input {
-    width: 80%;
-    padding: 2px;
-    border: 1px solid rgb(255, 255, 255) #f8f8f8;
-    border-radius: 20px; 
-    font-size: 16px;
-    
+.input-group-prod input {
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 25px;
+    color: rgb(0, 0, 0);
+    width: 100%; /* O input ocupa toda a largura disponível */
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    max-width: 350px; /* Limita a largura máxima do input */
 }
 
 
@@ -266,7 +269,7 @@ nav ul li a:hover::after {
     position: relative; 
     right: -190px; 
     width: 20%;
-    top: -35px;
+    top: 10px;
     padding: 10px; 
     background-color: #0db400;
     color: #fff;
@@ -297,7 +300,7 @@ nav ul li a:hover::after {
     position: relative; 
     right: -200px; 
     width: 20%;
-    top: -35px;
+    top: 10px;
     padding: 10px; 
     background-color: rgba(206, 35, 35, 0.89);
     color: #fff;
