@@ -6,7 +6,7 @@ include("php/Config.php");
 $msg = "";
 
 // Configuração da paginação
-$temas_por_pagina = 3;  // Quantos temas serão exibidos por página
+$temas_por_pagina = 8;  // Quantos temas serão exibidos por página
 $pagina_atual = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
 $offset = ($pagina_atual - 1) * $temas_por_pagina;
 
