@@ -56,6 +56,7 @@ $showModal = true;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="ico/SGE.ico" type="image/x-icon">
     <title>SGE - Agenda de Eventos</title>
     <link rel="stylesheet" href="index.css">
     <link
@@ -523,9 +524,9 @@ ul.separator ul {
              
              <ul> 
                 
-                 <li> <a href="ambiente.php"> Home</a></li>  
-                 <li> <a href= "ajuda do produtor.php">Ajuda</a></li>
-                 <li> <a href= "sobre.php">Sobre</a></li>
+                 <li> <a href="ambiente.php" title="Página Iinicial"> Home</a></li>  
+                 <li> <a href= "ajuda do produtor.php" title="Obtenha ajuda">Ajuda</a></li>
+                 <li> <a href= "sobre.php" title ="Sobre nós">Sobre</a></li>
                 
             </ul>
            
