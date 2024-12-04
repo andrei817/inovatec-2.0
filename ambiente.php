@@ -49,8 +49,7 @@ $showModal = true;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="ico/SGE.ico" type="image/x-icon">
-    
+    <link rel="shortcut icon" href="ico/SGE.ico" type="image/x-icon">
     <title>SGE - Ambiente do Produtor</title>
     <link
     rel="stylesheet"
@@ -146,9 +145,9 @@ $showModal = true;
               
               <ul> 
                  
-                  <li> <a href="ambiente.php"> Home</a></li>  
-                  <li> <a href= "ajuda do produtor.php">Ajuda</a></li>
-                  <li> <a href= "sobre.php">Sobre</a></li>
+              <li><a href="ambiente.php" title="Página inicial">Home</a></li>  
+        <li><a href="ajuda do produtor.php" title="Obtenha ajuda">Ajuda</a></li>
+        <li><a href="Sobre.php" title="Sobre nós">Sobre</a></li>
                  
              </ul>
             
@@ -200,7 +199,7 @@ $showModal = true;
     <div class="modal-content">
         <h2>Deseja se deslogar?</h2>
         <button class="btn btn-yes" onclick="confirmLogout()">Sim</button>
-        <button class="btn btn-no" onclick="closeModal('logoutModal')">Não</button>
+        <button class="btn btn-no" onclick="closeLogout('logoutModal')">Não</button>
     </div>
 </div>
 
@@ -208,7 +207,7 @@ $showModal = true;
 <div id="thankYouModal" class="modal">
     <div class="modal-content">
         <h2>Obrigado por usar o nosso site!</h2>
-        <button class="btn btn-close" onclick="closeModal('thankYouModal')">Fechar</button>
+        <button class="btn btn-close" onclick="closeLogout('thankYouModal')">Fechar</button>
     </div>
 </div>
 
@@ -219,13 +218,13 @@ $showModal = true;
     }
 
     // Função para fechar qualquer modal
-    function closeModal(modalId) {
+    function closeLogout(modalId) {
         document.getElementById(modalId).style.display = 'none';
     }
 
     // Função para confirmar o logout e mostrar o modal de agradecimento
     function confirmLogout() {
-        closeModal('logoutModal'); // Fecha o modal de logout
+        closeLogout('logoutModal'); // Fecha o modal de logout
         document.getElementById('thankYouModal').style.display = 'flex'; // Mostra o modal de agradecimento
         
         // Redireciona após alguns segundos (opcional)
@@ -253,7 +252,7 @@ $showModal = true;
           <h2>PRÓXIMOS EVENTOS</h2>
 
           
-<?php
+          <?php
 include('php/Config.php');
 
 // Função para exibir todos os eventos e contar o total de eventos
@@ -315,7 +314,6 @@ function exibirEventos() {
             ?>
         </div>
     </div>
-
      
 
                <!-- Botões de navegação -->
