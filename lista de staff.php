@@ -2,7 +2,7 @@
 include("php/Config.php");
 
 // Número de staffs por página
-$staffsPorPagina = 3;
+$staffsPorPagina = 8;
 
 // Determina a página atual (padrão é 1)
 $paginaAtual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
