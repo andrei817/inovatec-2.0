@@ -253,14 +253,14 @@ $showModal = true;
           <h2>PRÓXIMOS EVENTOS</h2>
 
           
-          <?php
+<?php
 include('php/Config.php');
 
 // Função para exibir todos os eventos e contar o total de eventos
 function exibirEventos() {
     global $conn;
 
-    // Consulta para buscar todos os eventos com os dados das tabelas de descrição
+    // Consulta para buscar todos os eventos cadastrados
     $sql_eventos = "SELECT e.nome, e.imagem, e.data, e.descricao, e.local, e.hora, e.lotacao, e.duracao,
                     fe.descricao AS faixa_etaria_desc, ss.descricao AS status_social_desc, 
                     se.nome AS status_evento_nome, es.descricao AS escolaridade_desc
@@ -269,7 +269,7 @@ function exibirEventos() {
                     LEFT JOIN status_social ss ON e.status_social_id = ss.id
                     LEFT JOIN status_do_evento se ON e.status_do_evento_id = se.id
                     LEFT JOIN escolaridades es ON e.escolaridades_id = es.id
-                    ORDER BY e.data DESC";
+                    ORDER BY e.data DESC"; // Remove o LIMIT para pegar todos os eventos
 
     $result = $conn->query($sql_eventos);
     $totalEventos = $result->num_rows;  // Conta o número total de eventos
@@ -285,13 +285,15 @@ function exibirEventos() {
 
             // Verificando se a imagem existe
             if (!empty($row['imagem']) && file_exists($caminho_imagem)) {
-                echo '<img src="' . $caminho_imagem . '" class="evento-imagem" alt="' . htmlspecialchars($row['nome']) . '">';
+                echo '<img src="' . $caminho_imagem . '" class="evento-imagem" alt="' . htmlspecialchars($row['nome']) . '" 
+                        onmouseover="stopAutoSlide()" onmouseout="startAutoSlide()">';
             } else {
                 echo '<p>Imagem não encontrada.</p>';
             }
 
             // Botão para exibir detalhes do evento
-            echo '<button onclick="showDetails(\'' . addslashes($row['nome']) . '\', \'' . addslashes($caminho_imagem) . '\', \'' . date("d/m/Y", strtotime($row['data'])) . '\', \'' . addslashes($row['descricao']) . '\', \'' . addslashes($row['local']) . '\', \'' . $row['hora'] . '\', \'' . $row['lotacao'] . '\', \'' . $row['duracao'] . '\', \'' . addslashes($row['faixa_etaria_desc']) . '\', \'' . addslashes($row['status_social_desc']) . '\', \'' . addslashes($row['status_evento_nome']) . '\', \'' . addslashes($row['escolaridade_desc']) . '\')">Saiba Mais →</button>';
+            echo '<button onclick="showDetails(\'' . addslashes($row['nome']) . '\', \'' . addslashes($caminho_imagem) . '\', \'' . date("d/m/Y", strtotime($row['data'])) . '\', \'' . addslashes($row['descricao']) . '\', \'' . addslashes($row['local']) . '\', \'' . $row['hora'] . '\', \'' . $row['lotacao'] . '\', \'' . $row['duracao'] . '\', \'' . addslashes($row['faixa_etaria_desc']) . '\', \'' . addslashes($row['status_social_desc']) . '\', \'' . addslashes($row['status_evento_nome']) . '\', \'' . addslashes($row['escolaridade_desc']) . '\')"
+                    onmouseover="stopAutoSlide()" onmouseout="startAutoSlide()">Saiba Mais →</button>';
 
             echo '</div>';
             echo '</div>';
@@ -303,19 +305,16 @@ function exibirEventos() {
     return $totalEventos; // Retorna o total de eventos para o JavaScript
 }
 ?>
+
 <div class="eventos">
-            
-        
-<!-- Carrossel Automático-->
-<div class="carousel">
-    <div class="carousel-container">
-        
-            
-        <?php exibirEventos(); ?>
-           
-        
+    <!-- Carrossel Automático-->
+    <div class="carousel">
+        <div class="carousel-container">
+            <?php 
+                $totalEventos = exibirEventos(); // Obtém o total de eventos
+            ?>
+        </div>
     </div>
-</div>
 
      
 
