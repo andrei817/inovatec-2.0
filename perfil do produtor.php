@@ -2,66 +2,71 @@
 session_start();
 include("php/Config.php");
 
-$cadastroSucesso = false;
-
 // Verificar se o produtor está logado
 if (!isset($_SESSION['id'])) {
     header('Location: login.php');
     exit;
 }
 
-// Obter o ID do produtor logado
 $produtor_id = $_SESSION['id'];
 
 // Consultar informações do produtor logado
-$sql = "SELECT nome, email, telefone, cpf FROM produtor WHERE id = ?";
-$stmt = $conn->prepare($sql);
+$stmt = $conn->prepare("SELECT * FROM produtor WHERE id = ?");
 $stmt->bind_param("i", $produtor_id);
 $stmt->execute();
-$result = $stmt->get_result();
-$produtor = $result->fetch_assoc();
+$produtor = $stmt->get_result()->fetch_assoc();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['update_profile'])) {
-        $novo_nome = trim($_POST['nome']);
-        $novo_email = trim($_POST['email']);
-        $novo_telefone = trim($_POST['telefone']);
-        $novo_cpf = trim($_POST['cpf']);
+    // Captura e limpa os dados do formulário
+    $novo_nome = trim($_POST['nome']);
+    $novo_email = trim($_POST['email']);
+    $novo_telefone = trim($_POST['telefone']);
+    $novo_cpf = trim($_POST['cpf']);
+    $nova_pergunta_seg = trim($_POST['pergunta_seg']);
+    $nova_resposta_seg = trim($_POST['resposta_seg']);
+    $senha_atual = trim($_POST['senha']);
+    $nova_senha = trim($_POST['nova_senha']);
+    $confirmar_senha = trim($_POST['confirmar_senha']);
 
-        // Validação básica
-        if (!empty($novo_nome) && !empty($novo_email) && filter_var($novo_email, FILTER_VALIDATE_EMAIL)) {
-            // Validar CPF (exemplo simples)
-            if (preg_match('/^\d{11}$/', $novo_cpf)) {
-                // Validar telefone (exemplo simples)
-                if (preg_match('/^\d{10,11}$/', $novo_telefone)) {
-                    // Atualizar os dados do produtor
-                    $update_sql = "UPDATE produtor SET nome = ?, email = ?, telefone = ?, cpf = ? WHERE id = ?";
-                    $update_stmt = $conn->prepare($update_sql);
-                    $update_stmt->bind_param("ssssi", $novo_nome, $novo_email, $novo_telefone, $novo_cpf, $produtor_id);
-                    $update_stmt->execute();
-
-                    if ($update_stmt->affected_rows > 0) {
-                        //$_SESSION['msg'] = "Perfil atualizado com sucesso!";
-                        //header('Location: ambiente.php');
-                        //exit;
-                    } else {
-                        $error = "Nenhuma alteração foi feita.";
-                    }
-                } else {
-                    $error = "Telefone inválido. Certifique-se de que ele tenha 10 ou 11 dígitos.";
-                }
+    // Validação básica
+    if (empty($novo_nome) || !filter_var($novo_email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Nome ou email inválido.";
+    } elseif (!preg_match('/^\d{11}$/', $novo_cpf)) {
+        $error = "CPF inválido.";
+    } elseif (!preg_match('/^\d{10,11}$/', $novo_telefone)) {
+        $error = "Telefone inválido.";
+    } else {
+        // Verificar senha atual, se fornecida
+        if (!empty($senha_atual)) {
+            if (md5($senha_atual) !== $produtor['senha']) {
+                $error = "Senha atual incorreta.";
+            } elseif ($nova_senha !== $confirmar_senha || empty($nova_senha)) {
+                $error = "Nova senha inválida ou não confere.";
             } else {
-                $error = "CPF inválido. Certifique-se de que ele tenha 11 dígitos.";
+                // Atualizar com nova senha
+                $nova_senha_md5 = md5($nova_senha);
+                $stmt = $conn->prepare("UPDATE produtor SET nome = ?, email = ?, telefone = ?, cpf = ?, pergunta_seg = ?, resposta_seg = ?, senha = ? WHERE id = ?");
+                $stmt->bind_param("sssssssi", $novo_nome, $novo_email, $novo_telefone, $novo_cpf, $nova_pergunta_seg, $nova_resposta_seg, $nova_senha_md5, $produtor_id);
             }
         } else {
-            $error = "Por favor, insira um nome válido e um email válido.";
+            // Atualizar sem nova senha
+            $stmt = $conn->prepare("UPDATE produtor SET nome = ?, email = ?, telefone = ?, cpf = ?, pergunta_seg = ?, resposta_seg = ? WHERE id = ?");
+            $stmt->bind_param("ssssssi", $novo_nome, $novo_email, $novo_telefone, $novo_cpf, $nova_pergunta_seg, $nova_resposta_seg, $produtor_id);
         }
-        
-        $cadastroSucesso = true;
+
+        // Executar atualização
+        if (isset($stmt)) {
+            if ($stmt->execute()) {
+                $cadastroSucesso = true;
+            } else {
+                $error = "Erro ao atualizar os dados.";
+            }
+        }
     }
 }
-
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -177,31 +182,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2>Atualizar Perfil</h2>
     <a href="ambiente.php" class="fecha-btn">&times;</a>
 
-    <div class="input-group">
+    <!-- Campos existentes (nome, email, telefone, cpf) -->
+    <div class="input-group-prod">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($produtor['nome']); ?>" required>
     </div>
 
-    <div class="input-group">
+    <div class="input-group-prod">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($produtor['email']); ?>" required>
     </div>
 
-    <div class="input-group">
+    <div class="input-group-prod">
         <label for="telefone">Telefone:</label>
         <input type="tel" id="telefone" name="telefone" value="<?php echo htmlspecialchars($produtor['telefone']); ?>" required>
     </div>
 
-    <div class="input-group">
+    <div class="input-group-prod">
         <label for="cpf">CPF:</label>
         <input type="text" id="cpf" name="cpf" value="<?php echo htmlspecialchars($produtor['cpf']); ?>" required>
     </div>
+
+    <div class="input-group-prod">
+        <label for="pergunta_seg">Pergunta de Segurança:</label>
+        <input type="text" id="pergunta_seg" name="pergunta_seg" value="<?php echo htmlspecialchars($produtor['pergunta_seg']); ?>" required>
+    </div>
+
+    <div class="input-group-prod">
+        <label for="resposta_seg">Resposta de Segurança:</label>
+        <input type="text" id="resposta_seg" name="resposta_seg" value="<?php echo htmlspecialchars($produtor['resposta_seg']); ?>" required>
+    </div>
+
+    <div class="input-group-prod">
+        <label for="senha">Senha Atual:</label>
+        <input type="password" id="senha" name="senha">
+    </div>
+
+    <div class="input-group-prod">
+        <label for="nova_senha">Nova Senha:</label>
+        <input type="password" id="nova_senha" name="nova_senha">
+    </div>
+
+    <div class="input-group-prod">
+        <label for="confirmar_senha">Confirmar Nova Senha:</label>
+        <input type="password" id="confirmar_senha" name="confirmar_senha">
+    </div>
+
 
     <button type="submit" name="update_profile" class="login-btn-alt">Salvar Alterações</button>
     <a href="ambiente.php" class="a"> 
         <button type="button" class="Cancel-btn-alt">Cancelar</button>
     </a>
 </form>
+
 
 <!-- Modal de Sucesso -->
 <div id="modalSucesso" class="modal-correto">
