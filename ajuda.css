@@ -28,6 +28,7 @@ body {
       grid-template-columns:
       repeat(4, 1fr);
   }
+
 }
 
 /* Estilos para telas médias (tablets) */
@@ -43,6 +44,21 @@ body {
       grid-template-columns:
       1fr;
   }
+
+  header {
+    height: 30px;
+    list-style: none;
+    padding: 5px;
+    min-width: 999px;
+    max-width: 750px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    gap: 80px;
+}
+
 }
 
 
@@ -267,6 +283,19 @@ p {
   box-shadow: 0 4px 10px rgb(0 0 0 / 10%);
 }
 
+.ajuda-title {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #5214cb; /* Cor de fundo (mesma cor do container para continuidade visual) */
+  padding: 10px 0;      /* Adiciona espaçamento vertical */
+  margin: 0;            /* Remove margens extras */
+  z-index: 200;          /* Garante que fique acima do conteúdo rolável */
+  color: white;         /* Mantém o texto visível */
+  text-align: center;   /* Centraliza o texto (opcional) */
+  height: 115px;
+}
+
 /* Estilo dos botões de seção */
 .help-title {
   width: 100%;
@@ -291,6 +320,7 @@ p {
 .help-content {
   display: none;
   width: 999px;
+  overflow-y: hidden; /* Oculta a barra de rolagem */
   padding: 10px;
   background-color: #5214cb;
   border: 1px solid rgb(0, 0, 0);
@@ -299,6 +329,8 @@ p {
   margin-bottom: 10px;
   
 }
+
+
 
 /* Scrollbar estilizada */
 .help-container::-webkit-scrollbar {
