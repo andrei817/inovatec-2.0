@@ -97,7 +97,7 @@
 include("php/Config.php");
 
 // Defina o número de buffets por página
-$buffetsPorPagina = 3;
+$buffetsPorPagina = 8;
 
 // Determine a página atual (padrão é 1)
 $paginaAtual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
