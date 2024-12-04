@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="ico/SGE.ico" type="image/x-icon">
     <title>SGE - Ajuda</title>
     <link rel="stylesheet" href="ajuda do produtor.css">
     
@@ -91,8 +92,11 @@
 
         <a href="ambiente.php" class="close-btn-ajuda">&times;</a>
         <div class="help-container">
+
+              <div class="ajuda-title">
                 <h1 class="Ajuda">Ajuda</h1>
                 <p>Bem-vindo ao Sistema de Gestão de Eventos (SGE). Aqui estão as instruções para ajudá-lo a gerenciar seus eventos de forma eficaz.</p>
+              </div>
 
                 <!-- Gerenciamento de Eventos -->
                 <div class="help-section">
@@ -168,6 +172,31 @@
             </div>
         </div>
     </div>
+
+    <script> 
+// Função para expandir o conteúdo e rolar a página até ele
+function toggleSection(sectionId) {
+  var content = document.getElementById(sectionId);
+  content.classList.toggle('active');
+
+  // A rolagem para a seção expandidas
+  if (content.classList.contains('active')) {
+    // Adiciona um pequeno atraso para garantir que a animação de expansão ocorra
+    setTimeout(function() {
+      content.scrollIntoView({ behavior: 'smooth' });
+    }, 200);
+  }
+}
+
+// Adicionando o evento de click nos botões de ajuda
+document.querySelectorAll('.help-title').forEach(function(button) {
+  button.addEventListener('click', function() {
+    var section = button.nextElementSibling;  // Encontre o conteúdo da seção
+    toggleSection(section.id);  // Chame a função de toggle
+  });
+});
+
+</script>
 
    </section>
 
