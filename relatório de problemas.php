@@ -115,7 +115,7 @@ function abrirSidebar() {
         include("php/Config.php");
 
         // Defina o número de registros por página
-        $registros_por_pagina = 3;
+        $registros_por_pagina = 8;
 
         // Verifique a página atual
         $pagina_atual = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
