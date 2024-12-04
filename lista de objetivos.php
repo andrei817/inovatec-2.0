@@ -28,6 +28,7 @@ $resultado = mysqli_query($conn, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="ico/SGE.ico" type="image/x-icon">
     <title>Tabela de Objetivos de Eventos</title>
     <link rel="stylesheet" href="objtivo.css">
 </head>
@@ -49,8 +50,7 @@ $resultado = mysqli_query($conn, $sql);
 </div>
 
 <script> 
-// Função para abrir a sidebar
-function abrirSidebar() {
+   function abrirSidebar() {
     if (window.innerWidth <= 768) {
       document.getElementById("mySidebar").style.width = "100%";
     } else {
@@ -144,15 +144,19 @@ function abrirSidebar() {
                     echo "<td>" . $objetivo['descricao'] . "</td>";
 
                     echo "<td class= action>
-                        <a class= 'a' href='edit objetivo.php?id=" . $objetivo['id'] . "'><button class='btn-edit'> <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'>
+                        <a class= 'a' href='edit objetivo.php?id=" . $objetivo['id'] . "'><button class='btn-edit' title='Editar'> <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'>
                         <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/>
                         <path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/> </a> </svg> </button></a>
                         
-                        <a class= 'a' href='delete objetivo.php?excluir=" . $objetivo['id'] . "' onclick='return confirm(\"Tem certeza que deseja excluir?\")'><button class='btn-delete'> <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash3' viewBox='0 0 16 16'>
+                        <a class='a' href='javascript:void(0);' onclick='openDeleteModal(" . $objetivo['id'] . ")'>
+                <button class='btn-delete' title='Deletar'>
+                    <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash3' viewBox='0 0 16 16'>
                         <path d='M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5'/>
-                      </svg> </a> </button></a>
-                      </td>";
-                echo "</tr>";
+                    </svg>
+                </button>
+            </a>
+          </td>";
+    echo "</tr>";
                     
                     
                 }
@@ -160,6 +164,53 @@ function abrirSidebar() {
             ?>             
         </tbody>
     </table>
+
+    <!-- Modal de Confirmação de Exclusão -->
+<div id="deleteModal" class="modal-delete">
+    <div class="modal-content-delete">
+        <h2>Deseja excluir esse objetivo?</h2>
+        
+        <div class="modal-actions">
+            <button id="confirmDelete" class="confirm-btn">Sim</button>
+            <button id="cancelDelete" class="cancel-btn">Não</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Elementos do modal
+let deleteModal = document.getElementById("deleteModal");
+let confirmDeleteBtn = document.getElementById("confirmDelete");
+let cancelDeleteBtn = document.getElementById("cancelDelete");
+
+// Variável para armazenar o ID do objetivo a ser excluído
+let objetivoIdParaExcluir;
+
+// Função para abrir o modal e armazenar o ID
+function openDeleteModal(id) {
+    objetivoIdParaExcluir = id; // Armazena o ID do objetivo
+    deleteModal.style.display = "flex"; // Exibe o modal
+}
+
+// Fecha o modal ao clicar em "Cancelar"
+cancelDeleteBtn.onclick = function() {
+    deleteModal.style.display = "none"; // Oculta o modal
+}
+
+// Confirma a exclusão ao clicar em "Excluir"
+confirmDeleteBtn.onclick = function() {
+    // Redireciona para a página de exclusão com o ID correto
+    window.location.href = "delete objetivo.php?excluir=" + objetivoIdParaExcluir;
+}
+
+// Fecha o modal ao clicar fora dele
+window.onclick = function(event) {
+    if (event.target === deleteModal) {
+        deleteModal.style.display = "none";
+    }
+}
+</script>
+
 
     <!-- Navegação da Paginação -->
     <div class="pagination">
