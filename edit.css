@@ -267,6 +267,10 @@ nav ul li a:hover::after {
     transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
+.resp {
+    margin-left: -25px;
+}
+
 
 
 
@@ -274,7 +278,7 @@ nav ul li a:hover::after {
     position: relative; 
     right: -30px; 
     width: 20%;
-    top: 35px;
+    top: 75px;
     padding: 10px; 
     background-color: #0db400;
     color: #fff;
@@ -305,7 +309,7 @@ nav ul li a:hover::after {
     position: relative; 
     right: -45px; 
     width: 20%;
-    top: 35px;
+    top: 75px;
     padding: 10px; 
     background-color: rgba(206, 35, 35, 0.89);
     color: #fff;
