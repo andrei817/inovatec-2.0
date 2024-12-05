@@ -168,8 +168,7 @@ if ($stmt_assoc->execute()) {
 </div>
 
 <script> 
-// Função para abrir a sidebar
-function abrirSidebar() {
+    function abrirSidebar() {
     if (window.innerWidth <= 768) {
       document.getElementById("mySidebar").style.width = "100%";
     } else {
@@ -499,14 +498,43 @@ $buffets = obterBuffets()
    
     <div class="image-container">
     <div class="form-row image-row">
-        <label for="imagem">Imagem do Evento:</label>
+        <label for="imagem" class="custom-file-button">Escolher Imagem</label>
         <input type="file" id="imagem" name="imagem" accept="image/*" required onchange="previewImage()">
 
+        <!-- Pré-visualização da imagem ou mensagem padrão -->
         <div class="image-preview">
-            <img id="image-preview" src="image-not-found.png" alt="Pré-visualização da Imagem" style="max-width: 200px; max-height: 200px;">
+            <img id="image-preview" src="image-not-found.png" alt="Nenhuma Imagem Escolhida" style="max-width: 200px; max-height: 200px;">
+            <span id="no-image-message" style="display: none; font-size: 16px; color: #888;">Nenhuma imagem escolhida</span>
         </div>
     </div>
 </div>
+
+
+<script>
+    // Função para atualizar a pré-visualização da imagem
+    function previewImage() {
+        var fileInput = document.getElementById("imagem");
+        var file = fileInput.files[0];
+        var preview = document.getElementById("image-preview");
+        var noImageMessage = document.getElementById("no-image-message");
+
+        if (file) {
+            // Exibe a imagem escolhida
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = "block";
+                noImageMessage.style.display = "none";  // Esconde a mensagem
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // Se não houver imagem, exibe a mensagem padrão
+            preview.src = "image-not-found.png";
+            preview.style.display = "none";  // Esconde a imagem
+            noImageMessage.style.display = "block";  // Exibe a mensagem
+        }
+    }
+</script>
 
 </div>
 
