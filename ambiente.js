@@ -43,35 +43,53 @@ window.addEventListener("click", function (e) {
 });
 
 
-function showDetails(nome, imagem, data, descricao, local, hora, lotacao, duracao, faixa_etaria_desc, status_social_desc, status_evento_nome, escolaridade_desc) {
-  // Preenche o modal com as informações do evento
+function showDetails(nome, imagem, data, descricao, local, hora, lotacao, duracao, faixaEtaria, statusSocial, statusEvento, escolaridade) {
   document.getElementById('modalNome').innerText = nome;
-  document.getElementById('modalData').innerText = 'Data: ' + data;
+  document.getElementById('modalData').innerText = `Data: ${data}`;
   document.getElementById('modalDescricao').innerText = descricao;
   document.getElementById('modalLocal').innerText = local;
   document.getElementById('modalHora').innerText = hora;
   document.getElementById('modalLotacao').innerText = lotacao;
   document.getElementById('modalDuracao').innerText = duracao;
+  document.getElementById('modalFaixaEtaria').innerText = faixaEtaria;
+  document.getElementById('modalStatusSocial').innerText = statusSocial;
+  document.getElementById('modalEscolaridade').innerText = escolaridade;
 
-  // Passa as descrições e nomes ao modal
-  document.getElementById('modalFaixaEtaria').innerText = 'Faixa Etária: ' + faixa_etaria_desc;
-  document.getElementById('modalStatusSocial').innerText = 'Status Social: ' + status_social_desc;
-  document.getElementById('modalStatusEvento').innerText = 'Status do Evento: ' + status_evento_nome;
-  document.getElementById('modalEscolaridade').innerText = 'Escolaridade: ' + escolaridade_desc;
+  const statusEventElement = document.getElementById('modalStatusEvento');
+  statusEventElement.innerText = statusEvento;
 
-  // Exibe o modal
-  document.getElementById('eventModal').style.display = "block";
-}
-
-// Função para fechar o modal
-function closeModal() {
-  document.getElementById('eventModal').style.display = "none";
-}
-
-// Fechar o modal quando clicar fora dele
-window.onclick = function(event) {
-  if (event.target == document.getElementById('eventModal')) {
-      closeModal();
+  let statusClass = '';
+  switch (statusEvento) {
+      case 'Concluído':
+          statusClass = 'status-concluido';
+          break;
+      case 'Cancelado':
+          statusClass = 'status-cancelado';
+          break;
+      case 'Em Andamento':
+          statusClass = 'status-ativo';
+          break;
+      case 'Adiado':
+          statusClass = 'status-pendente';
+          break;
+      default:
+          statusClass = '';
   }
+
+  statusEventElement.className = statusClass;
+  document.getElementById('eventModal').style.display = 'block';
 }
+
+function closeModal() {
+  document.getElementById('eventModal').style.display = 'none';
+}
+
+window.onclick = function(event) {
+    if (event.target == document.getElementById('eventModal')) {
+        closeModal();
+    }
+}
+
+  
+    
 
