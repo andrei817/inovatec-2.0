@@ -500,14 +500,15 @@ a {
 }
 
 /* Botão de fechar */
-.close-icon {
-    margin-top: 10px;
+.close-icon-correto {
+    margin-top: 40px;
     padding: 10px 20px;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    margin-left: 444px;
+    right: 459px;
+    border-radius: 10px;
     cursor: pointer;
-
 }
 
 .correto-img {
