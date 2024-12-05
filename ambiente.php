@@ -290,9 +290,8 @@ function exibirEventos() {
                 echo '<p>Imagem não encontrada.</p>';
             }
 
-            // Botão para exibir detalhes do evento
-            echo '<button onclick="showDetails(\'' . addslashes($row['nome']) . '\', \'' . addslashes($caminho_imagem) . '\', \'' . date("d/m/Y", strtotime($row['data'])) . '\', \'' . addslashes($row['descricao']) . '\', \'' . addslashes($row['local']) . '\', \'' . $row['hora'] . '\', \'' . $row['lotacao'] . '\', \'' . $row['duracao'] . '\', \'' . addslashes($row['faixa_etaria_desc']) . '\', \'' . addslashes($row['status_social_desc']) . '\', \'' . addslashes($row['status_evento_nome']) . '\', \'' . addslashes($row['escolaridade_desc']) . '\')"
-                    onmouseover="stopAutoSlide()" onmouseout="startAutoSlide()">Saiba Mais →</button>';
+            // Botão "Saiba Mais"
+            echo '<button onclick="showDetails(\'' . addslashes($row['nome']) . '\', \'' . addslashes($caminho_imagem) . '\', \'' . date("d/m/Y", strtotime($row['data'])) . '\', \'' . addslashes($row['descricao']) . '\', \'' . addslashes($row['local']) . '\', \'' . date("H\hi", strtotime($row['hora'])) . '\', \'' . addslashes($row['lotacao']) . '\', \'' . addslashes($row['duracao']) . '\', \'' . addslashes($row['faixa_etaria_desc']) . '\', \'' . addslashes($row['status_social_desc']) . '\', \'' . addslashes($row['status_evento_nome']) . '\', \'' . addslashes($row['escolaridade_desc']) . '\')">Saiba Mais →</button>';
 
             echo '</div>';
             echo '</div>';
@@ -303,10 +302,11 @@ function exibirEventos() {
 
     return $totalEventos; // Retorna o total de eventos para o JavaScript
 }
+
 ?>
 
 <div class="eventos">
-    <!-- Carrossel Automático-->
+    <!-- Carrossel com 3 imagens -->
     <div class="carousel">
         <div class="carousel-container">
             <?php 
@@ -314,51 +314,43 @@ function exibirEventos() {
             ?>
         </div>
     </div>
-     
-
-               <!-- Botões de navegação -->
+    <!-- Botões de navegação -->
     <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
     <button class="next" onclick="moveSlide(1)">&#10095;</button>
-
-
+</div>
+         </div>
             </div>
-            </div>
-            </div>
-             </div>
+            
 
-   
 
-    <script> 
-
+<script> 
 let currentSlide = 0;
-const totalSlides = 2;  // Definindo o total de slides como 2
 const slides = document.querySelectorAll('.carousel-slide');
-let autoSlideInterval = null;
+const totalSlides = Math.ceil(slides.length / 3); // Calcular grupos de três
 
 function showSlide(index) {
-  // Ajuste para loop infinito
   if (index >= totalSlides) {
-    currentSlide = 0;  // Volta ao primeiro slide
+    currentSlide = 0; // Volta ao primeiro grupo de slides
   } else if (index < 0) {
-    currentSlide = totalSlides - 1;  // Vai para o último slide
+    currentSlide = totalSlides - 1; // Vai para o último grupo
   } else {
     currentSlide = index;
   }
 
-  // Mover o carrossel para o slide correto
+  // Ajustar o offset para mover três slides por vez
   const offset = -currentSlide * 100;
   document.querySelector('.carousel-container').style.transform = `translateX(${offset}%)`;
 }
 
 function moveSlide(direction) {
   showSlide(currentSlide + direction);
-  resetAutoSlide();  // Reinicia o carrossel automático após interação manual
+  resetAutoSlide(); // Reinicia o carrossel automático após interação manual
 }
 
 function startAutoSlide() {
   autoSlideInterval = setInterval(() => {
-    moveSlide(1);  // Move para o próximo slide automaticamente
-  }, 5000);  // Intervalo de 5 segundos
+    moveSlide(1); // Avança automaticamente para o próximo grupo
+  }, 5000); // Intervalo de 5 segundos
 }
 
 function stopAutoSlide() {
@@ -370,14 +362,10 @@ function resetAutoSlide() {
   startAutoSlide();
 }
 
-// Exibe o primeiro slide ao carregar a página
+// Exibe o primeiro grupo ao carregar a página
 showSlide(currentSlide);
-
-// Inicia o carrossel automático
 startAutoSlide();
-
- </script>         
-      
+</script>
 
     
 <div id="eventModal" class="modal-detalhes">
