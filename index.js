@@ -53,30 +53,51 @@ app.get("/protected", authMiddleware, (req, res) => {
 
 app.listen(3000, () => console.log("Servidor rodando na porta 3000"));
 
-function showDetails(nome, imagem, data, descricao, local, hora, lotacao, duracao, faixa_etaria_desc, status_social_desc, status_evento_nome, escolaridade_desc) {
-    // Preenche o modal com as informações do evento
-    document.getElementById('modalNome').innerText = nome;
-    document.getElementById('modalData').innerText = 'Data: ' + data;
-    document.getElementById('modalDescricao').innerText = descricao;
-    document.getElementById('modalLocal').innerText = local;
-    document.getElementById('modalHora').innerText = hora;
-    document.getElementById('modalLotacao').innerText = lotacao;
-    document.getElementById('modalDuracao').innerText = duracao;
+function showDetails(nome, imagem, data, descricao, local, hora, lotacao, duracao, faixaEtaria, statusSocial, statusEvento, escolaridade) {
+  document.getElementById('modalNome').innerText = nome;
+  document.getElementById('modalData').innerText = `Data: ${data}`;
+  document.getElementById('modalDescricao').innerText = descricao;
+  document.getElementById('modalLocal').innerText = local;
+  document.getElementById('modalHora').innerText = hora;
+  document.getElementById('modalLotacao').innerText = lotacao;
+  document.getElementById('modalDuracao').innerText = duracao;
+  document.getElementById('modalFaixaEtaria').innerText = `Faixa Etária: ${faixaEtaria}`;
+  document.getElementById('modalStatusSocial').innerText = `Status Social: ${statusSocial}`;
+  document.getElementById('modalEscolaridade').innerText = `Escolaridade: ${escolaridade}`;
 
-    // Passa as descrições e nomes ao modal
-    document.getElementById('modalFaixaEtaria').innerText = 'Faixa Etária: ' + faixa_etaria_desc;
-    document.getElementById('modalStatusSocial').innerText = 'Status Social: ' + status_social_desc;
-    document.getElementById('modalStatusEvento').innerText = 'Status do Evento: ' + status_evento_nome;
-    document.getElementById('modalEscolaridade').innerText = 'Escolaridade: ' + escolaridade_desc;
+  // Aplicando a classe de cor para o status do evento
+  const statusEventElement = document.getElementById('modalStatusEvento');
+  statusEventElement.innerText = `Status do Evento: ${statusEvento}`;
 
-    // Exibe o modal
-    document.getElementById('eventModal').style.display = "block";
+  // Definir a classe CSS para o status
+  let statusClass = '';
+  switch (statusEvento) {
+      case 'Concluído':
+          statusClass = 'status-concluido';
+          break;
+      case 'Cancelado':
+          statusClass = 'status-cancelado';
+          break;
+      case 'Em Andamento':
+          statusClass = 'status-ativo';
+          break;
+      case 'Adiado':
+          statusClass = 'status-pendente';
+          break;
+      default:
+          statusClass = '';  // Caso o status não tenha uma correspondência
+  }
+
+  statusEventElement.className = statusClass; // Adiciona a classe ao status
+
+  // Abre o modal
+  document.getElementById('eventModal').style.display = 'block';
 }
 
-// Função para fechar o modal
 function closeModal() {
-    document.getElementById('eventModal').style.display = "none";
+  document.getElementById('eventModal').style.display = 'none';
 }
+
 
 // Fechar o modal quando clicar fora dele
 window.onclick = function(event) {
@@ -84,6 +105,9 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+
+
+
 
 
 
