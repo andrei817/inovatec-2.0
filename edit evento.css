@@ -149,7 +149,7 @@
     font-size: 16px;
     margin-bottom: 10px;
     display: flex;
-     margin-top: -500px;
+    margin-top: -400px;
      margin-right: auto;
 }
 
@@ -159,6 +159,45 @@
     max-width: 100%; /* Garante que a imagem se ajuste */
 }
 
+
+    /* Esconde o input de arquivo */
+    #imagem {
+        display: none;
+    }
+
+    /* Estilo personalizado para o botão de escolha de arquivo */
+    .custom-file-button {
+        display: inline-block;
+        background-color: rgb(40, 71, 185);
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .custom-file-button:hover {
+        background-color: #2b18b9;
+    }
+    
+    .custom-file-button:active {
+        background-color: #4857a1;
+    }
+    
+    /* Estilo do campo de texto */
+    #file-name {
+        width: 200px;
+        padding: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* Estilo para a pré-visualização da imagem */
+    .image-preview {
+        margin-top: 10px;
+    }
 
 .login-btn-evento {
     position: relative; 
@@ -218,5 +257,10 @@
 
 .Cancel-btn-evento:hover {
     background-color: #f53e3e;
+}
+
+/* Ocultar o input file */
+.hidden-file-input {
+    display: none;
 }
 
