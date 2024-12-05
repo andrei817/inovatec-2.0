@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssss", $nome, $email, $telefone, $senha, $cpf, $pergunta_seg, $resposta_seg);
-
+$cadastroSucesso = true;
     if ($stmt->execute()) {
        
     } else {
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $stmt->close();
-} $cadastroSucesso = true;
+} 
 ?>
 
 
