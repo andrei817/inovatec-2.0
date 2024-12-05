@@ -19,13 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssss", $nome, $email, $telefone, $senha, $cpf, $pergunta_seg, $resposta_seg);
 
     if ($stmt->execute()) {
-        $cadastroSucesso = true;
+       
     } else {
         echo "Erro: " . $stmt->error;
     }
 
     $stmt->close();
-}
+} $cadastroSucesso = true;
 ?>
 
 
@@ -183,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <!-- Modal de Sucesso -->
 <div id="modalSucesso" class="modal-correto">
     <div class="modal-content-correto"> 
-        <span class="close-icon" onclick="fecharModal()">&times;</span>
+        <span class="close-icon-correto" onclick="fecharModal()">&times;</span>
         <h2>Produtor Cadastrado com Sucesso!</h2>
         <img src="correto.png" class="correto-img">
        
@@ -199,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Exibe o modal se o cadastro foi bem-sucedido
     <?php if ($cadastroSucesso): ?>
         document.getElementById("modalSucesso").style.display = "flex";
-         setTimeout(fecharModal, 3000); // Fecha automaticamente após 3 segundos
+        // setTimeout(fecharModal, 3000); // Fecha automaticamente após 3 segundos
     <?php endif; ?>
 </script>
 
