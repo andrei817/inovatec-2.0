@@ -345,9 +345,9 @@ table {
     width: 1300px;
     border-collapse: collapse;
     margin-bottom: 70px;
-    margin: 66px;
-    color: white;
-    margin-top: 10px;
+    margin: 40px;
+    color: white;   
+    margin-top: -50px;
     font-size: 12px;
     
     
@@ -409,14 +409,15 @@ td {
   }
 
   .ações {
-      width: 14%;
+      width: 10%;
+      gap: 56px;
+     
   }
 
   .a {
-      color: white;
-      text-decoration: none;
-      
-  }
+    color: white;
+    text-decoration: none;
+}
 
 h2 {
     
@@ -430,9 +431,10 @@ h2 {
     border-radius: 20px;
 
 }
-.actions {
+.evento-actions {
     display: flex;
-    gap: 40px;
+    gap: 60px;
+    
 }
 
 .btn-delete {
@@ -495,4 +497,73 @@ h2 {
 .pagination a:disabled {
     pointer-events: none; /* Desabilita o clique em links desabilitados */
 }
+
+
+/* Estilo do Modal */
+.modal-delete {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+  padding-top: 60px;
+}
+
+.modal-content-delete {
+  background-color: #5214cb;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-delete-confirm,
+.btn-cancel {
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 15px;
+        cursor: pointer;
+}
+
+.btn-delete-confirm {
+  background-color: rgb(13, 175, 13);
+  color: white;
+  
+}
+
+.btn-cancel {
+  background-color: #b91414;
+  color: white;
+  
+}
+
+/* Ajustando a imagem para o formato 3x4 */
+img.event-image {
+  width: 120px; /* Largura 3x (ajuste conforme necessário) */
+  height: 100px; /* Altura 4x (ajuste conforme necessário) */
+  object-fit: cover; /* Mantém a proporção da imagem dentro da área */
+
+}
+
 
