@@ -276,3 +276,69 @@ actions {
 .pagination a:hover:not(.active) {
     background-color: #ddd;
 }
+
+/* Modal */
+.modal-delete {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.4); 
+    padding-top: 165px;
+  }
+  
+  .modal-content-delete {
+    background-color: #5214cb;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    border-radius: 10px;
+    max-width: 300px;
+    text-align: center;
+  }
+  
+  .close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .close-btn:hover,
+  .close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .modal-actions {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .btn-confirm,
+  .btn-cancel {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 15px;
+    margin: 5px;
+  }
+  
+  .btn-confirm {
+    background-color: rgb(13, 175, 13);
+    color: white;
+    border: none;
+  }
+  
+  .btn-cancel {
+    background-color: #b91414;
+    color: white;
+    border: none;
+  }
+  
