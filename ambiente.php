@@ -277,6 +277,20 @@ function exibirEventos() {
         while ($row = $result->fetch_assoc()) {
             $caminho_imagem = "uploads/eventos/" . htmlspecialchars($row['imagem']);
 
+            // Conversão da duração de minutos para horas e minutos
+            $duracao_minutos = intval($row['duracao']);
+            $horas = floor($duracao_minutos / 60);  // Parte inteira das horas
+            $minutos = $duracao_minutos % 60;       // Minutos restantes
+
+            // Formata a duração no formato "Xh Ymin"
+            if ($horas > 0 && $minutos > 0) {
+                $duracao_formatada = $horas . 'h ' . $minutos . 'min';
+            } elseif ($horas > 0) {
+                $duracao_formatada = $horas . 'h';  // Apenas horas
+            } else {
+                $duracao_formatada = $minutos . 'min';  // Apenas minutos
+            }
+
             // Exibindo os dados do evento
             echo '<div class="carousel-slide">';
             echo '<div class="evento">';
@@ -291,7 +305,7 @@ function exibirEventos() {
             }
 
             // Botão "Saiba Mais"
-            echo '<button onclick="showDetails(\'' . addslashes($row['nome']) . '\', \'' . addslashes($caminho_imagem) . '\', \'' . date("d/m/Y", strtotime($row['data'])) . '\', \'' . addslashes($row['descricao']) . '\', \'' . addslashes($row['local']) . '\', \'' . date("H\hi", strtotime($row['hora'])) . '\', \'' . addslashes($row['lotacao']) . '\', \'' . addslashes($row['duracao']) . '\', \'' . addslashes($row['faixa_etaria_desc']) . '\', \'' . addslashes($row['status_social_desc']) . '\', \'' . addslashes($row['status_evento_nome']) . '\', \'' . addslashes($row['escolaridade_desc']) . '\')">Saiba Mais →</button>';
+            echo '<button onclick="showDetails(\'' . addslashes($row['nome']) . '\', \'' . addslashes($caminho_imagem) . '\', \'' . date("d/m/Y", strtotime($row['data'])) . '\', \'' . addslashes($row['descricao']) . '\', \'' . addslashes($row['local']) . '\', \'' . date("H\hi", strtotime($row['hora'])) . '\', \'' . addslashes($row['lotacao']) . '\', \'' . addslashes($duracao_formatada) . '\', \'' . addslashes($row['faixa_etaria_desc']) . '\', \'' . addslashes($row['status_social_desc']) . '\', \'' . addslashes($row['status_evento_nome']) . '\', \'' . addslashes($row['escolaridade_desc']) . '\')">Saiba Mais →</button>';
 
             echo '</div>';
             echo '</div>';
@@ -302,9 +316,7 @@ function exibirEventos() {
 
     return $totalEventos; // Retorna o total de eventos para o JavaScript
 }
-
 ?>
-
 <div class="eventos">
     <!-- Carrossel com 3 imagens -->
     <div class="carousel">
@@ -368,6 +380,7 @@ startAutoSlide();
 </script>
 
     
+<!-- Modal -->
 <div id="eventModal" class="modal-detalhes">
     <div class="modal-content-detalhes">
         <span class="close-btn-modal" onclick="closeModal()">&times;</span>
@@ -378,12 +391,13 @@ startAutoSlide();
         <p><strong>Hora:</strong> <span id="modalHora"></span></p>
         <p><strong>Lotação:</strong> <span id="modalLotacao"></span></p>
         <p><strong>Duração:</strong> <span id="modalDuracao"></span></p>
-        <p><strong></strong> <span id="modalFaixaEtaria"></span></p>
-        <p><strong></strong> <span id="modalStatusSocial"></span></p>
-        <p><strong></strong> <span id="modalStatusEvento"></span></p>
-        <p><strong></strong> <span id="modalEscolaridade"></span></p>
+        <p><strong>Faixa Etária:</strong> <span id="modalFaixaEtaria"></span></p>
+        <p><strong>Status Social:</strong> <span id="modalStatusSocial"></span></p>
+        <p><strong>Status do Evento:</strong> <span id="modalStatusEvento"></span></p>
+        <p><strong>Escolaridade:</strong> <span id="modalEscolaridade"></span></p>
     </div>
 </div>
+
 
     <script src="ambiente.js"></script>
 </body>
