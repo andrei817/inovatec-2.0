@@ -84,8 +84,6 @@
   }
 </script>
 
-
-
 <div class="agenda-evento">
     <div class="conteudo">
 
@@ -102,7 +100,7 @@
                 <div class="help-section">
                     <button class="help-title">Como Criar um Evento?</button>
                     <div class="help-content">
-                        <p>Para criar um evento, acesse o menu lateral e clique na seção "Evento", nele vc terá uma lista de eventos e acesse "Adicionar Novo Evento", preencha os campos obrigatórios como nome, data, local, etc., e clique em "Cadastrar".</p>
+                        <p>Para criar um evento, Acesse o menu lateral e clique na seção "Eventos", nele vc terá uma lista de eventos e acesse "Adicionar Novo Evento", preencha os campos obrigatórios como nome, data, local, etc., e clique em "Cadastrar".</p>
                     </div>
                 </div>
 
@@ -118,7 +116,7 @@
                 <div class="help-section">
                     <button class="help-title">Como Adicionar um Staff ao Evento?</button>
                     <div class="help-content">
-                        <p>Você pode associar membros da equipe (staff) ao evento durante o cadastro. Clique em "Adicionar Staff", selecione o membro desejado e defina suas responsabilidades.</p>
+                        <p>Você pode também cadastrar um membros da equipe (staff) ao evento. Primeiro clique no menu e vai em "Staff" você verá a lista de staffs e ao clicar em "Adicionar Staff", selecione o membro desejado e defina suas responsabilidades.</p>
                     </div>
                 </div>
 
@@ -158,7 +156,7 @@
               <div class="help-section">
                   <button class="help-title">Como Reportar Problemas?</button>
                   <div class="help-content">
-                      <p>Para reportar problemas, acesse o menu lateral e clique na opção "Reportar Problema". Nele você verá um relatório com as informações de um evento com o problema ocorrido em seguida, clique em "Reportar Problemas" Preencha o formulário com detalhes sobre o erro ou situação encontrada e clique em "Enviar". Nossa equipe analisará sua solicitação.</p>
+                      <p>Para reportar problemas, acesse o menu e clique na opção "Reportar Problema". Nele você verá um relatório com as informações de um evento com o problema ocorrido em seguida, clique em "Reportar Problemas" Preencha o formulário com detalhes sobre o erro ou situação encontrada e clique em "Reportar". Nossa equipe analisará sua solicitação.</p>
                   </div>
               </div>
 
@@ -166,7 +164,7 @@
               <div class="help-section">
                   <button class="help-title">Como Redefinir a Senha?</button>
                   <div class="help-content">
-                      <p>Se você esquecer sua senha, clique em "Esqueceu a senha?" na página de login. Insira o e-mail cadastrado e siga as instruções enviadas para redefinir sua senha. Caso seja produtor, vá até o perfil e escolha "Alterar Senha".</p>
+                      <p>Se você esquecer sua senha, clique em "Esqueceu a senha?" na página de login. Insira o e-mail, a pergunta que você digitou e a resposta cadastrada e siga as instruções enviadas para redefinir sua senha. Caso seja produtor, vá até o perfil e escolha "Alterar Senha" e confirme sua nova senha.</p>
                   </div>
               </div>
             </div>
