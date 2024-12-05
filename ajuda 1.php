@@ -233,12 +233,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email']) && isset($_PO
 
         <div class="ajuda-title">
             <h1 class="Ajuda"> Ajuda</h1>
-            <p> Olá seja bem vindo ao S.G.E. aqui a baixo estão as opções de ajuda caso você precise compreender melhor nosso site</p>
+            <p> Olá Seja Bem Vindo ao S.G.E. Aqui a baixo estão as opções de ajuda caso você precise compreender melhor nosso site.</p>
         </div>
             <div class="help-section">
               <button class="help-title" onclick="toggleHelp(this)">Agenda</button>
               <div class="help-content">
-                <p>Centralizado em sua tela é nossa agenda de eventos,rolando para os lados você visualiza outros eventos disponíveis<br> e ao clicar em algum desses você terá mais informações sobre o evento escolhido.</p>
+                <p>Centralizado em sua tela é nossa agenda de eventos, rolando para os lados você visualiza outros eventos disponíveis<br> e ao clicar no "Saiba Mais", você terá mais informações sobre o evento escolhido.</p>
               </div>
             </div>
         
@@ -260,14 +260,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email']) && isset($_PO
             <div class="help-section">
               <button class="help-title" onclick="toggleHelp(this)"> Como funciona o carrossel de eventos?</button>
               <div class="help-content">
-                <p>No carrossel os eventos centralizados serão os próximos e ao usuário clicar nas setas indicadoras serão exibidos todos os outros eventos.</p>
+                <p>No carrossel automático os eventos centralizados serão os próximos e ao usuário clicar nas setas indicadoras serão exibidos todos os outros eventos.</p>
               </div>
             </div>
 
             <div class="help-section">
               <button class="help-title" onclick="toggleHelp(this)"> Como posso visualizar detalhes dos eventos?</button>
               <div class="help-content">
-                <p>Abaixo dos eventos que aparecem na tela inicial possui a opção de "saiba mais" nessa opção clicável você terá informações detalhadas do evento escolhido.</p>
+                <p>Abaixo dos eventos que aparecem na tela inicial possui a opção de "Saiba Mais" nessa opção clicável você terá informações detalhadas desse evento.</p>
               </div>
             </div>
 
