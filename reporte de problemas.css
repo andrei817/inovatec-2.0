@@ -210,7 +210,7 @@ nav ul li a:hover::after {
 
     .close_login-btn {
     position: relative; /* Posiciona o botão de fechar */
-    top: -80px; /* Distância do topo */
+    top: -95px; /* Distância do topo */
     right: -390px; /* Distância da direita */
     font-size: 35px; /* Tamanho da fonte */
     color: rgb(243, 243, 243); /* Cor do botão */
