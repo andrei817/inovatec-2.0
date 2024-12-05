@@ -61,15 +61,13 @@ function showDetails(nome, imagem, data, descricao, local, hora, lotacao, duraca
   document.getElementById('modalHora').innerText = hora;
   document.getElementById('modalLotacao').innerText = lotacao;
   document.getElementById('modalDuracao').innerText = duracao;
-  document.getElementById('modalFaixaEtaria').innerText = `Faixa Etária: ${faixaEtaria}`;
-  document.getElementById('modalStatusSocial').innerText = `Status Social: ${statusSocial}`;
-  document.getElementById('modalEscolaridade').innerText = `Escolaridade: ${escolaridade}`;
+  document.getElementById('modalFaixaEtaria').innerText = faixaEtaria;
+  document.getElementById('modalStatusSocial').innerText = statusSocial;
+  document.getElementById('modalEscolaridade').innerText = escolaridade;
 
-  // Aplicando a classe de cor para o status do evento
   const statusEventElement = document.getElementById('modalStatusEvento');
-  statusEventElement.innerText = `Status do Evento: ${statusEvento}`;
+  statusEventElement.innerText = statusEvento;
 
-  // Definir a classe CSS para o status
   let statusClass = '';
   switch (statusEvento) {
       case 'Concluído':
@@ -85,12 +83,10 @@ function showDetails(nome, imagem, data, descricao, local, hora, lotacao, duraca
           statusClass = 'status-pendente';
           break;
       default:
-          statusClass = '';  // Caso o status não tenha uma correspondência
+          statusClass = '';
   }
 
-  statusEventElement.className = statusClass; // Adiciona a classe ao status
-
-  // Abre o modal
+  statusEventElement.className = statusClass;
   document.getElementById('eventModal').style.display = 'block';
 }
 
@@ -98,18 +94,11 @@ function closeModal() {
   document.getElementById('eventModal').style.display = 'none';
 }
 
-
-// Fechar o modal quando clicar fora dele
 window.onclick = function(event) {
     if (event.target == document.getElementById('eventModal')) {
         closeModal();
     }
 }
-
-
-
-
-
 
   
     
