@@ -8,27 +8,21 @@ $cadastroSucesso = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Coletar dados do formulário
     $evento_id = $conn->real_escape_string($_POST['evento_id']);
-    $data_evento = $conn->real_escape_string($_POST['data_evento']);
+    $data = $conn->real_escape_string($_POST['data']);
     $descricao_problema = $conn->real_escape_string($_POST['descricao_problema']);
     $contato = $conn->real_escape_string($_POST['contato']);
 
     // Inserir dados no banco de dados
-    $sql = "INSERT INTO problemas_evento (evento_id, data_evento, descricao_problema, contato)
-            VALUES ('$evento_id', '$data_evento', '$descricao_problema', '$contato')";
+    $sql = "INSERT INTO problemas_evento (evento_id, data, descricao_problema, contato)
+            VALUES ('$evento_id', '$data', '$descricao_problema', '$contato')";
 
     if ($conn->query($sql) === TRUE) {
-        //echo "Problema reportado com sucesso!";
+        $cadastroSucesso = true;
     } else {
         echo "Erro ao reportar o problema: " . $conn->error;
     }
-    $cadastroSucesso = true;
 }
-
-// Fechar conexão
-$conn->close();
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -38,7 +32,6 @@ $conn->close();
     <link rel="shortcut icon" href="ico/SGE.ico" type="image/x-icon">
     <link rel="stylesheet" href="reporte de problemas.css">
     <title>Reportar Problema</title>
-
 </head>
 <body>
 
@@ -57,74 +50,6 @@ $conn->close();
   <!-- Conteúdo da página -->
 </div>
 
-<script> 
-  function abrirSidebar() {
-    if (window.innerWidth <= 768) {
-      document.getElementById("mySidebar").style.width = "100%";
-    } else {
-      document.getElementById("mySidebar").style.width = "310px";
-    }
-    // Adiciona a classe "aberto" à sidebar
-    document.getElementById("mySidebar").classList.add("aberto");
-  }
-
-  // Função para fechar a sidebar
-  function fecharSidebar() {
-    document.getElementById("mySidebar").style.width = "0";
-    // Remove a classe "aberto"
-    document.getElementById("mySidebar").classList.remove("aberto");
-  }
-
-  // Adiciona o evento para fechar ao clicar fora da sidebar
-  document.addEventListener('click', function (event) {
-    const sidebar = document.getElementById("mySidebar");
-    const isClickInsideSidebar = sidebar.contains(event.target);
-    const isClickOnButton = event.target.closest('.open-btn');
-
-    // Fecha a sidebar se o clique não for nela nem no botão de abrir
-    if (!isClickInsideSidebar && !isClickOnButton && sidebar.classList.contains("aberto")) {
-      fecharSidebar();
-    }
-  });
-
-  // Fecha a sidebar ao clicar nos links
-  document.querySelectorAll('#mySidebar a').forEach(link => {
-    link.addEventListener('click', fecharSidebar);
-  });
-   </script>
-
-
-<script>
-  // Função para mostrar/ocultar a lista suspensa do perfil
-  function toggle() {
-      var profileDropdownList = document.querySelector('.profile-dropdown-list');
-      profileDropdownList.classList.toggle('active');
-  }
-
-  // Função para mostrar o modal de logout
-  function showLogoutModal() {
-      document.getElementById('logoutModal').style.display = 'flex';
-  }
-
-  // Função para fechar qualquer modal
-  function closeModal(modalId) {
-      document.getElementById(modalId).style.display = 'none';
-  }
-
-  // Função para confirmar o logout e mostrar o modal de agradecimento
-  function confirmLogout() {
-      closeModal('logoutModal'); // Fecha o modal de logout
-      document.getElementById('thankYouModal').style.display = 'flex'; // Mostra o modal de agradecimento
-      
-      // Redireciona após alguns segundos (opcional)
-      setTimeout(function() {
-          window.location.href = 'index.php'; // Redireciona para a página inicial
-      }, 2000); // Aguarda 2 segundos antes de redirecionar
-  }
-</script>
-
-
-
 <div class="agenda-evento">
     <div class="conteudo">
         
@@ -135,33 +60,31 @@ $conn->close();
 
     <form action="" method="POST">
        <div class="input-group">
-    <label for="evento_id">Evento:</label>
-    <select name="evento_id" id="evento_id" class="inputUser"  required>
-        <option> Selecione o Evento </option>
+        <label for="evento_id">Evento:</label>
+        <select name="evento_id" id="evento_id" class="inputUser" required>
+            <option value=""> Selecione o Evento </option>
             <?php
             // Conexão com o banco de dados
             include("php/Config.php");
 
-            // Buscar os cargos
-            $sql = "SELECT id, nome FROM eventos";
+            // Buscar os eventos e suas datas
+            $sql = "SELECT id, nome, data FROM eventos"; // Alterado para 'data'
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "<option value='" . $row['id'] . "'>" . $row['nome'] . "</option>";
+                    echo "<option value='" . $row['id'] . "' data-data='" . $row['data'] . "'>" . $row['nome'] . "</option>";
                 }
             } else {
                 echo "<option value=''>Nenhum evento encontrado</option>";
             }
-            $conn->close();
             ?>
         </select><br>
-
      </div>
 
         <div class="input-group">
-        <label for="data_evento">Data do Evento:</label>
-        <input type="date" id="data_evento" name="data_evento" required>
+        <label for="data">Data do Evento:</label>
+        <input type="date" id="data" name="data" required readonly> <!-- Alterado para 'data' -->
         </div>
 
         <div class="input-group">
@@ -171,7 +94,7 @@ $conn->close();
 
         <div class="input-group">
         <label for="contato">E-mail :</label>
-        <input type="text" id="contato" name="contato" required placeholder="Digite seu e-mail ou telefone">
+        <input type="text" id="contato" name="contato" required placeholder="Digite seu e-mail">
         </div>
 
         <button type="submit" class="login-reportar"> Reportar</button>
@@ -179,38 +102,9 @@ $conn->close();
         
     </form>
     </div>
-        </div>
-    <!-- script do sidebar -->
-    <script> 
+</div>
 
-// Função para abrir a sidebar
-function abrirSidebar() {
-  document.getElementById("mySidebar").style.width = "310px";
-}
-
-// Função para fechar a sidebar
-function fecharSidebar() {
-  document.getElementById("mySidebar").style.width = "0";
-}
-
-// Função para abrir a sidebar
-function abrirSidebar() {
-  // Se for um dispositivo móvel, ocupa 100% da tela; caso contrário, 250px
-  if (window.innerWidth <= 768) {
-      document.getElementById("mySidebar").style.width = "100%";
-  } else {
-      document.getElementById("mySidebar").style.width = "310px";
-  }
-}
-
-// Função para fechar a sidebar
-function fecharSidebar() {
-  document.getElementById("mySidebar").style.width = "0";
-}
-
-    </script>
-
-    <!-- Modal de Sucesso -->
+<!-- Modal de Sucesso -->
 <div id="modalSucesso" class="modal-correto">
     <div class="modal-content-correto"> 
         <span class="close-icon" onclick="fecharModal()">&times;</span>
@@ -240,24 +134,17 @@ function fecharSidebar() {
     <?php endif; ?>
 </script>
 
-
 <script>
-  
     document.getElementById('evento_id').addEventListener('change', function() {
         var eventoSelect = this;
-        var dataEvento = eventoSelect.options[eventoSelect.selectedIndex].getAttribute('data-data_evento');
+        var data = eventoSelect.options[eventoSelect.selectedIndex].getAttribute('data-data');
         
-        // Preencher o campo data_evento com a data associada ao evento selecionado
-        if (dataEvento) {
-            document.getElementById('data_evento').value = dataEvento;
+        // Preencher o campo 'data' com a data associada ao evento selecionado
+        if (data) {
+            document.getElementById('data').value = data;
         }
     });
 </script>
 
-
-
 </body>
 </html>
-
-
-
