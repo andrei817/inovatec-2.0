@@ -172,8 +172,7 @@ if (isset($_POST['atualizar'])) {
 </div>
 
 <script> 
-// Função para abrir a sidebar
-function abrirSidebar() {
+   function abrirSidebar() {
     if (window.innerWidth <= 768) {
       document.getElementById("mySidebar").style.width = "100%";
     } else {
@@ -434,24 +433,59 @@ function abrirSidebar() {
      <div class="image-container">
     <div class="form-row image-row">
         <label for="imagem">Imagem do Evento:</label>
-        <input type="file" id="imagem" name="imagem" accept="image/*" onchange="previewImage()">
+        
+        <!-- Campo de arquivo oculto com estilo personalizado -->
+        <input type="file" id="imagem" name="imagem" accept="image/*" onchange="updateFileName()">
+        
+        <!-- Campo de texto para mostrar o nome do arquivo -->
+        <input type="text" id="file-name" value="<?php echo !empty($row['imagem']) ? htmlspecialchars($row['imagem']) : ''; ?>" readonly style="background-color: #f0f0f0; cursor: default;">
         
         <?php if (!empty($row['imagem'])): ?>
             <div class="current-image">
-                <img src="uploads/eventos/<?php echo $row['imagem']; ?>" alt="Imagem do Evento Atual" style="max-width: 200px; max-height: 200px;">
+                <img src="uploads/eventos/<?php echo htmlspecialchars($row['imagem']); ?>" alt="Imagem do Evento Atual" style="max-width: 200px; max-height: 200px;">
             </div>
         <?php endif; ?>
         
         <div class="image-preview">
             <img id="image-preview" src="#" alt="Pré-visualização da Imagem" style="display:none; max-width: 200px; max-height: 200px;">
         </div>
+
+        <!-- Botão personalizado -->
+        <label for="imagem" class="custom-file-button">Escolher Imagem</label>
     </div>
 </div>
 
-   
-               
-    
-                    
+<script>
+    // Função para atualizar o nome do arquivo selecionado
+    function updateFileName() {
+        var fileInput = document.getElementById("imagem");
+        var fileNameField = document.getElementById("file-name");
+
+        // Exibe o nome do arquivo selecionado no campo de texto
+        if (fileInput.files.length > 0) {
+            fileNameField.value = fileInput.files[0].name;
+        } else {
+            fileNameField.value = "";
+        }
+
+        // Exibe a pré-visualização da imagem
+        var imagePreview = document.getElementById("image-preview");
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            imagePreview.style.display = "block";
+        };
+
+        if (fileInput.files[0]) {
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            imagePreview.style.display = "none";
+        }
+    }
+</script>
+
+         
                 </form>
             </div>
         </section>
