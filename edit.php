@@ -161,8 +161,10 @@ mysqli_close($conn);
                    </div>
 
                    <div class="input-group-prod">
+                       <div class="resp">
                         <label for="resposta_seg">Resposta de Segurança:</label>
                         <input type="text" id="resposta_seg" name="resposta_seg" value="<?php echo htmlspecialchars($produtor['resposta_seg']); ?>" required><br>
+                       </div>
                    </div>
 
                    <button type="submit" class="login-btn-edit">Salvar</button>
