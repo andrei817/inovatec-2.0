@@ -91,7 +91,7 @@ $total_pages = ceil($total_events / $events_per_page);
 </div>
 
 <script> 
-function abrirSidebar() {
+ function abrirSidebar() {
     if (window.innerWidth <= 768) {
       document.getElementById("mySidebar").style.width = "100%";
     } else {
@@ -124,7 +124,8 @@ function abrirSidebar() {
   document.querySelectorAll('#mySidebar a').forEach(link => {
     link.addEventListener('click', fecharSidebar);
   });
-</script>
+   </script>
+
 
 <script>
   // Função para mostrar/ocultar a lista suspensa do perfil
@@ -147,6 +148,11 @@ function abrirSidebar() {
   function confirmLogout() {
       closeModal('logoutModal'); // Fecha o modal de logout
       document.getElementById('thankYouModal').style.display = 'flex'; // Mostra o modal de agradecimento
+      
+      // Redireciona após alguns segundos (opcional)
+      setTimeout(function() {
+          window.location.href = 'index.php'; // Redireciona para a página inicial
+      }, 2000); // Aguarda 2 segundos antes de redirecionar
   }
 </script>
 
