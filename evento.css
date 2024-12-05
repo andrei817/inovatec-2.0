@@ -347,10 +347,52 @@ nav ul li a:hover::after {
      margin-right: auto;
 }
 
-.image-preview img {
-    margin-top: 10px;
+/* Esconde o input de arquivo */
+#imagem {
     display: none;
-    max-width: 100%; /* Garante que a imagem se ajuste */
+}
+
+/* Estilo personalizado para o botão de escolha de arquivo */
+.custom-file-button {
+    display: inline-block;
+    background-color: rgb(40, 71, 185);
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.custom-file-button:hover {
+    background-color: #2b18b9;
+}
+
+.custom-file-button:active {
+    background-color: #4857a1;
+}
+
+/* Estilo da pré-visualização da imagem */
+.image-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+}
+
+/* Mensagem quando não houver imagem */
+.image-preview span {
+    display: block;
+    font-size: 16px;
+    color: #888;
+    text-align: center;
 }
 
 .login-btn-evento {
