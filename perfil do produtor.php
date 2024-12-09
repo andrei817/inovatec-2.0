@@ -16,6 +16,9 @@ $stmt->bind_param("i", $produtor_id);
 $stmt->execute();
 $produtor = $stmt->get_result()->fetch_assoc();
 
+$cadastroSucesso = false; // Variável para verificar se o cadastro foi bem-sucedido
+$cadastroErro = false;    // Variável para verificar se houve erro
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Captura e limpa os dados do formulário
     $novo_nome = trim($_POST['nome']);
@@ -30,18 +33,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Validação básica
     if (empty($novo_nome) || !filter_var($novo_email, FILTER_VALIDATE_EMAIL)) {
-        $error = "Nome ou email inválido.";
-    } elseif (!preg_match('/^\d{11}$/', $novo_cpf)) {
-        $error = "CPF inválido.";
-    } elseif (!preg_match('/^\d{10,11}$/', $novo_telefone)) {
-        $error = "Telefone inválido.";
+        $cadastroErro = true;
+        $erroMensagem = "Nome ou email inválido.";
+    } elseif (!preg_match('/^\d{3}\.\d{3}\.\d{3}-\d{2}$/', $novo_cpf) && !preg_match('/^\d{11}$/', $novo_cpf)) {
+        // Valida CPF com ou sem pontos e traços
+        $cadastroErro = true;
+        $erroMensagem = "CPF inválido. O formato correto é XXX.XXX.XXX-XX ou XXXXXXXXXXX.";
+    } elseif (!preg_match('/^\(\d{2}\)\s?\d{4,5}-\d{4}$/', $novo_telefone)) {
+        // Valida telefone no formato (21) 0000-0000 ou (21) 00000-0000
+        $cadastroErro = true;
+        $erroMensagem = "Telefone inválido. O formato correto é (XX) XXXX-XXXX ou (XX) XXXXX-XXXX.";
     } else {
         // Verificar senha atual, se fornecida
         if (!empty($senha_atual)) {
             if (md5($senha_atual) !== $produtor['senha']) {
-                $error = "Senha atual incorreta.";
+                $cadastroErro = true;
+                $erroMensagem = "Senha atual incorreta.";
             } elseif ($nova_senha !== $confirmar_senha || empty($nova_senha)) {
-                $error = "Nova senha inválida ou não confere.";
+                $cadastroErro = true;
+                $erroMensagem = "Nova senha inválida ou não confere.";
             } else {
                 // Atualizar com nova senha
                 $nova_senha_md5 = md5($nova_senha);
@@ -59,12 +69,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($stmt->execute()) {
                 $cadastroSucesso = true;
             } else {
-                $error = "Erro ao atualizar os dados.";
+                $cadastroErro = true;
+                $erroMensagem = "Erro ao atualizar os dados.";
             }
         }
     }
 }
 ?>
+
+
 
 
 
@@ -96,30 +109,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 <script> 
-    // Função para abrir a sidebar
-    function abrirSidebar() {
-     document.getElementById("mySidebar").style.width = "250px";
-   }
-   
-   // Função para fechar a sidebar
-   function fecharSidebar() {
-     document.getElementById("mySidebar").style.width = "0";
-   }
-   
-   // Função para abrir a sidebar
    function abrirSidebar() {
-     // Se for um dispositivo móvel, ocupa 100% da tela; caso contrário, 250px
-     if (window.innerWidth <= 768) {
-         document.getElementById("mySidebar").style.width = "100%";
-     } else {
-         document.getElementById("mySidebar").style.width = "310px";
-     }
-   }
-   
-   // Função para fechar a sidebar
-   function fecharSidebar() {
-     document.getElementById("mySidebar").style.width = "0";
-   }
+    if (window.innerWidth <= 768) {
+      document.getElementById("mySidebar").style.width = "100%";
+    } else {
+      document.getElementById("mySidebar").style.width = "310px";
+    }
+    // Adiciona a classe "aberto" à sidebar
+    document.getElementById("mySidebar").classList.add("aberto");
+  }
+
+  // Função para fechar a sidebar
+  function fecharSidebar() {
+    document.getElementById("mySidebar").style.width = "0";
+    // Remove a classe "aberto"
+    document.getElementById("mySidebar").classList.remove("aberto");
+  }
+
+  // Adiciona o evento para fechar ao clicar fora da sidebar
+  document.addEventListener('click', function (event) {
+    const sidebar = document.getElementById("mySidebar");
+    const isClickInsideSidebar = sidebar.contains(event.target);
+    const isClickOnButton = event.target.closest('.open-btn');
+
+    // Fecha a sidebar se o clique não for nela nem no botão de abrir
+    if (!isClickInsideSidebar && !isClickOnButton && sidebar.classList.contains("aberto")) {
+      fecharSidebar();
+    }
+  });
+
+  // Fecha a sidebar ao clicar nos links
+  document.querySelectorAll('#mySidebar a').forEach(link => {
+    link.addEventListener('click', fecharSidebar);
+  });
    </script>
 
 
@@ -238,33 +260,72 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!-- Modal de Sucesso -->
 <div id="modalSucesso" class="modal-correto">
-    <div class="modal-content-correto"> 
-        <span class="close-icon" onclick="fecharModal()">&times;</span>
+    <div class="modal-content-correto">
+        <span class="close-icon" onclick="fecharModal('modalSucesso')">&times;</span>
         <h1>Perfil Atualizado com Sucesso!</h1>
         <img src="correto.png" class="correto-img">
     </div>
 </div>
 
+<!-- Modal de Erro -->
+<div id="errorModal" class="modal-erro">
+    <div class="modal-content-erro">
+        <span class="close-btn-erro" onclick="fecharModal('errorModal')">&times;</span>
+        <h2>Erro</h2>
+        <p id="errorMessage"></p> <!-- A mensagem de erro será inserida dinamicamente aqui -->
+    </div>
+</div>
+
 <script>
     // Função para fechar o modal
-    function fecharModal() {
-        document.getElementById("modalSucesso").style.display = "none";
+    function fecharModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
     }
 
-    // Função para redirecionar para outra página
+    // Função para redirecionar para outra página (no caso do sucesso)
     function redirecionarParaPagina() {
         window.location.href = "ambiente.php";  // Substitua com o URL da página desejada
     }
 
-    // Exibe o modal se o cadastro foi bem-sucedido
-    <?php if ($cadastroSucesso): ?>
+    // Função para exibir o modal de sucesso
+    function mostrarSucesso() {
         document.getElementById("modalSucesso").style.display = "flex";
         setTimeout(function() {
-            fecharModal();           // Fecha o modal
-           redirecionarParaPagina();  // Redireciona para outra página após 3 segundos
+            fecharModal("modalSucesso");           // Fecha o modal de sucesso
+            redirecionarParaPagina();              // Redireciona após 3 segundos
         }, 3000); // Fecha automaticamente após 3 segundos
-    <?php endif; ?>
+    }
+
+    // Função para exibir o modal de erro
+    function mostrarErro(message) {
+        const modal = document.getElementById('errorModal');
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.textContent = message;
+        modal.style.display = 'flex'; // Mostra o modal
+        setTimeout(function() {
+            fecharModal("errorModal");  // Fecha o modal após 3 segundos
+        }, 3000); // Fecha automaticamente após 3 segundos
+    }
 </script>
+
+<?php if ($cadastroSucesso): ?>
+    <script>
+        // Exibe o modal de sucesso e redireciona após 3 segundos
+        mostrarSucesso();
+    </script>
+<?php elseif ($cadastroErro): ?>
+    <script>
+        // Exibe o modal de erro com a mensagem do PHP
+        mostrarErro("<?php echo $erroMensagem; ?>");
+    </script>
+<?php endif; ?>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+<script> $('#cpf').mask('000.000.000-00', {reverse: true}); </script>
+<script> $('#telefone').mask('(00) 00000-0000'); </script>
+
+
 
     
 </div>
