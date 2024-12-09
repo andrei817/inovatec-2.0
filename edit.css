@@ -209,26 +209,69 @@ nav ul li a:hover::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60vh; 
-   
+    height: 60vh;
+    padding: 20px; /* Para evitar bordas muito próximas em telas pequenas */
 }
+
 .login-box {
     align-items: center;
     background-image: radial-gradient(circle, #5214Cb, #3c1292);
-    margin: 50px ;
+    margin: 20px; /* Reduzido para melhor ajuste em telas menores */
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 700px;
-    height: 550px;
+    width: 90%; /* Usa uma porcentagem para largura responsiva */
+    max-width: 500px; /* Define um limite máximo para largura */
+    height: auto; /* Permite altura dinâmica conforme o conteúdo */
     text-align: center;
-    background-color: rgb(23, 0, 155);
+}
+
+
+/* Responsividade para telas maiores */
+@media (max-width: 768px) {
+    .login-box {
+        width: 80%; /* Ajusta a largura para telas maiores */
+        max-width: 600px; /* Aumenta o limite máximo */
+    }
+
+    .close-btn-edit {
+        right: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .login-box {
+        width: 90%; /* Ajusta a largura para telas maiores */
+        max-width: 700px; /* Aumenta o limite máximo */
+    }
+}
+
+/* Responsividade para telas muito grandes */
+@media (min-width: 1200px) {
+    .login-box {
+        width: 100%; /* Reduz a largura para telas maiores */
+        max-width: 800px; /* Aumenta o limite máximo para telas grandes */
+        height: auto;
+    }
+
+   
+}
+
+/* Responsividade para telas muito grandes */
+@media (min-width: 1024px) {
+    .login-box {
+        width: 100%; /* Reduz a largura para telas maiores */
+        max-width: 800px; /* Aumenta o limite máximo para telas grandes */
+        height: auto;
+    }
+
+   
 }
    
 .close-btn-edit {
     position: relative; /* Posiciona o botão de fechar */
     top: -65px; /* Distância do topo */
-    right: -333px; /* Distância da direita */
+    right: -360px; /* Distância da direita */
     font-size: 35px; /* Tamanho da fonte */
     color: rgb(243, 243, 243); /* Cor do botão */
     cursor: pointer; /* Muda o cursor ao passar o mouse */
