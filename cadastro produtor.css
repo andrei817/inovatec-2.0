@@ -267,42 +267,77 @@ nav ul li a:hover::after {
     padding: 0;
     box-sizing: border-box;
 }
+
 .login-section {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60vh; 
-   
+    height: 60vh;
+    padding: 20px; /* Para evitar bordas muito próximas em telas pequenas */
 }
+
 .login-box {
     align-items: center;
     background-image: radial-gradient(circle, #5214Cb, #3c1292);
-    margin: 50px ;
+    margin: 20px; /* Reduzido para melhor ajuste em telas menores */
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 700px;
-    height: 626px;
+    width: 90%; /* Usa uma porcentagem para largura responsiva */
+    max-width: 500px; /* Define um limite máximo para largura */
+    height: auto; /* Permite altura dinâmica conforme o conteúdo */
     text-align: center;
-
 }
-   
-.fecha-btn{
-    position: relative; /* Posiciona o botão de fechar */
-    top: -80px; /* Distância do topo */
-    right: -333px; /* Distância da direita */
-    font-size: 35px; /* Tamanho da fonte */
-    color: rgb(243, 243, 243); /* Cor do botão */
-    cursor: pointer; /* Muda o cursor ao passar o mouse */
+
+/* Botão de fechar */
+.fecha-btn {
+    position: relative; /* Ajustado para maior flexibilidade */
+    top: -80px; /* Melhora o posicionamento */
+    right: -375px; /* Distância da borda direita */
+    font-size: 35px; /* Reduzido para melhor adaptação em telas pequenas */
+    color: rgb(243, 243, 243);
+    cursor: pointer;
     z-index: 1000;
-    text-decoration: none; 
+    text-decoration: none;
 }
 
-.fecha-btn :hover{
-    transition: background-color 0.3s;
-    background-color: rgb(74, 36, 180);
-    text-decoration: none; /* Remove sublinhado */
-    cursor: pointer; /* Muda o cursor ao passar o mouse */
+
+
+/* Responsividade para telas maiores */
+@media (max-width: 768px) {
+    .login-box {
+        width: 60%; /* Ajusta a largura para telas maiores */
+        max-width: 600px; /* Aumenta o limite máximo */
+    }
+}
+
+@media (max-width: 600px) {
+    .login-box {
+        width: 90%; /* Ajusta a largura para telas maiores */
+        max-width: 900px; /* Aumenta o limite máximo */
+    }
+}
+
+/* Responsividade para telas muito grandes */
+@media (min-width: 1200px) {
+    .login-box {
+        width: 100%; /* Reduz a largura para telas maiores */
+        max-width: 800px; /* Aumenta o limite máximo para telas grandes */
+        height: 600px;
+    }
+
+   
+}
+
+/* Responsividade para telas muito grandes */
+@media (min-width: 1024px) {
+    .login-box {
+        width: 100%; /* Reduz a largura para telas maiores */
+        max-width: 800px; /* Aumenta o limite máximo para telas grandes */
+        height: 600px;
+    }
+
+   
 }
 
 
@@ -583,4 +618,40 @@ h2 {
     color: #ffff;
     cursor: pointer;
 }
+
+.modal-incorreto {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #5214cb;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content-incorreto {
+    text-align: center;
+}
+
+.close-icon-incorreto {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.erro-img {
+    width: 40%;
+    height: 35%;
+    margin-top: 15px;
+}
+
 
