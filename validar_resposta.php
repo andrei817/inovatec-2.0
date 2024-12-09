@@ -55,15 +55,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['verificar_resposta']))
 }
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="ico/SGE.ico" type="image/x-icon">
     <title>Redefinir Senha</title>
-    <link rel="stylesheet" href="esquecir_senha.css">
+    <link rel="stylesheet" href="validar resposta.css">
 </head>
 
 <body>
@@ -95,12 +93,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['verificar_resposta']))
            
            <ul> 
               
-               <li> <a href="index.php"> Home</a></li>  
-               <li> <a href= "ajuda 1.php">Ajuda</a></li>
-               <li> <a href= "Sobre 1.php">Sobre</a></li>
-               <li> <a onclick="abrirPopUp()"> <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
-               <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
-           </svg></a></li>
+           <li><a href="index.php" title="Página inicial">Home</a></li>  
+        <li><a href="ajuda 1.php" title="Obtenha ajuda">Ajuda</a></li>
+        <li><a href="Sobre 1.php" title="Sobre nós">Sobre</a></li>
+        <a onclick="abrirPopUp()" title="Área Restrita">
+        <li> <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+    </svg>
+</a></li>
        </ul>
    </nav>
 </header>
@@ -119,23 +119,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['verificar_resposta']))
     <div class="modal-content-pergunta">
 
     <form action="" method="POST">
+       
+    <a href="index.php" class="fecha-btn">&times;</a>
 
     <div class="input-group">
     <input type="email" name="email" placeholder="E-mail" required>
     </div>
 
     <div class="input-group">
-        <!-- Exibindo a pergunta de segurança -->
         <label for="pergunta_seg"><?php echo htmlspecialchars($pergunta); ?></label>
-        <input type="text" name="pergunta_seg" placeholder="Digite a pergunta de segurança" required>
+        <input type="text" name="pergunta_seg" placeholder="Digite a pergunta" required>
     </div>
 
 
 <div class="input-group">
-    <input type="text" name="resposta_seg" placeholder="Resposta de Segurança" required>
+    <input type="text" name="resposta_seg" placeholder="Resposta" required>
 </div>
 
     <button type="submit" name="verificar_resposta" class="btn-pergunta">Verificar</button>
+    <a href="index.php"><button type="button" class="Cancel-btn-pergunta">Cancelar</button></a>
 </form>
 
 <div id="modalRespostaIncorreta" class="modal-erro" style="display: none;">
