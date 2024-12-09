@@ -211,7 +211,6 @@ nav ul li a:hover::after {
     width: 700px;
     height: 468px;
     text-align: center;
-    background-color: rgb(23, 0, 155);
     
 }
 
@@ -219,7 +218,7 @@ nav ul li a:hover::after {
    
 .fecha-btn {
     position: relative; /* Posiciona o botão de fechar */
-    top: -140px; /* Distância do topo */
+    top: -159px; /* Distância do topo */
     right: -680px; /* Distância da direita */
     font-size: 35px; /* Tamanho da fonte */
     color: rgb(243, 243, 243); /* Cor do botão */
@@ -235,8 +234,9 @@ nav ul li a:hover::after {
     cursor: pointer; /* Muda o cursor ao passar o mouse */
 }
 
+
 .input-group-prod {
-    display: inline-flex; /* Usando flexbox para centralizar os itens */
+    display: inline-block; /* Usando flexbox para centralizar os itens */
     flex-direction: column; /* Alinha os itens em coluna */
     align-items: center; /* Centraliza os itens horizontalmente */
     margin-bottom: 25px;
@@ -254,14 +254,14 @@ nav ul li a:hover::after {
 }
 
 .input-group-prod input {
-    padding: 12px;
+    padding: 8px;
     font-size: 15px;
     border-radius: 25px;
     color: rgb(0, 0, 0);
-    width: 100%; /* O input ocupa toda a largura disponível */
+    width: 95%; /* O input ocupa toda a largura disponível */
     box-sizing: border-box;
     transition: border-color 0.3s ease;
-    max-width: 350px; /* Limita a largura máxima do input */
+    max-width: 359px; /* Limita a largura máxima do input */
 }
 
 
@@ -430,4 +430,39 @@ nav ul li a:hover::after {
 .voltar:hover {
     background-color: #4bd641;
 }
+
+/* Estilo geral do modal */
+.modal-erro {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Conteúdo do modal */
+.modal-content-erro {
+    background-color: #5214cb;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: absolute;
+}
+
+/* Botão de fechar */
+.close-btn-erro {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
 
