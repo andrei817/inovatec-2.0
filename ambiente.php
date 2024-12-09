@@ -27,23 +27,6 @@ $produtor_nome = $_SESSION['nome'];
 ?>
 
 
-<?php
-// Verifica se o parâmetro 'logout' foi passado na URL
-if (isset($_GET['logout']) && $_GET['logout'] === 'true') {
-    // Destrua a sessão (fazendo logout)
-    session_unset(); // Limpa todas as variáveis de sessão
-    session_destroy(); // Destroi a sessão
-
-    // Redireciona para a página de login ou homepage
-    header("Location: index.php"); // Altere para a página de login ou onde desejar redirecionar
-    exit();
-}
-// Sinaliza que o modal deve ser exibido
-$showModal = true;
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -194,20 +177,56 @@ $showModal = true;
                         </a>
                       </li>
 
-                    <!-- Modal de Logout -->
+                
+
+<!-- Modal de Logout -->
 <div id="logoutModal" class="modal">
     <div class="modal-content">
         <h2>Deseja se deslogar?</h2>
-        <button class="btn btn-yes" onclick="confirmLogout()">Sim</button>
-        <button class="btn btn-no" onclick="closeLogout('logoutModal')">Não</button>
+        <!-- Formulário de logout -->
+        <form id="logoutForm" method="POST" action="logo out.php">
+            <!-- Botões Sim e Não em linha -->
+            <div class="button-container">
+                <!-- Botão Sim ativa a função JavaScript -->
+                <button type="button" class="btn btn-yes" onclick="handleLogout()">Sim</button>
+
+                <!-- Botão Não fecha o modal -->
+                <button type="button" class="btn btn-no" onclick="closeLogout('logoutModal')">Não</button>
+            </div>
+        </form>
     </div>
 </div>
+
+<!-- Estilos CSS dos botões -->
+<style>
+    .button-container {
+        display: flex; /* Usar flexbox para alinhar os botões */
+        justify-content: space-between; /* Espaçamento entre os botões */
+        gap: 10px; /* Espaço entre os botões */
+    }
+    .btn {
+        padding: 10px 20px; /* Adiciona um espaçamento interno para os botões */
+        cursor: pointer;
+        border: none;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    .btn-yes {
+        background-color: #4CAF50; /* Cor do botão Sim */
+        color: white;
+    }
+    .btn-no {
+        background-color: #f44336; /* Cor do botão Não */
+        color: white;
+    }
+</style>
+
 
 <!-- Modal de Agradecimento -->
 <div id="thankYouModal" class="modal">
     <div class="modal-content">
         <h2>Obrigado por usar o nosso site!</h2>
-        <button class="btn btn-close" onclick="closeLogout('thankYouModal')">Fechar</button>
+       
     </div>
 </div>
 
@@ -222,17 +241,23 @@ $showModal = true;
         document.getElementById(modalId).style.display = 'none';
     }
 
-    // Função para confirmar o logout e mostrar o modal de agradecimento
-    function confirmLogout() {
-        closeLogout('logoutModal'); // Fecha o modal de logout
-        document.getElementById('thankYouModal').style.display = 'flex'; // Mostra o modal de agradecimento
-        
-        // Redireciona após alguns segundos (opcional)
+    // Função para lidar com o logout com modal de agradecimento
+    function handleLogout() {
+        // Fecha o modal de logout
+        closeLogout('logoutModal');
+
+        // Mostra o modal de agradecimento
+        document.getElementById('thankYouModal').style.display = 'flex';
+
+        // Aguarda 2 segundos antes de enviar o formulário
         setTimeout(function() {
-            window.location.href = 'index.php'; // Redireciona para a página inicial
-        }, 2000); // Aguarda 3 segundos antes de redirecionar
+            document.getElementById('logoutForm').submit(); // Envia o formulário de logout
+        }, 2000); // 2000 milissegundos = 2 segundos
     }
 </script>
+
+
+
 
                       
                   
@@ -268,27 +293,27 @@ function exibirEventos() {
                     LEFT JOIN status_social ss ON e.status_social_id = ss.id
                     LEFT JOIN status_do_evento se ON e.status_do_evento_id = se.id
                     LEFT JOIN escolaridades es ON e.escolaridades_id = es.id
-                    ORDER BY e.data DESC"; // Remove o LIMIT para pegar todos os eventos
+                    ORDER BY e.data DESC";
 
     $result = $conn->query($sql_eventos);
-    $totalEventos = $result->num_rows;  // Conta o número total de eventos
+    $totalEventos = $result->num_rows; // Conta o número total de eventos
 
-    if ($result->num_rows > 0) {
+    if ($totalEventos > 0) {
         while ($row = $result->fetch_assoc()) {
             $caminho_imagem = "uploads/eventos/" . htmlspecialchars($row['imagem']);
 
-            // Conversão da duração de minutos para horas e minutos
-            $duracao_minutos = intval($row['duracao']);
-            $horas = floor($duracao_minutos / 60);  // Parte inteira das horas
-            $minutos = $duracao_minutos % 60;       // Minutos restantes
+            // Conversão da duração de horas decimais para horas e minutos
+            $duracao_horas = floatval($row['duracao']); // Recebe como horas (ex.: 1.5 para 1h 30min)
+            $horas = floor($duracao_horas); // Parte inteira das horas
+            $minutos = ($duracao_horas - $horas) * 60; // Calcula os minutos restantes
 
             // Formata a duração no formato "Xh Ymin"
             if ($horas > 0 && $minutos > 0) {
-                $duracao_formatada = $horas . 'h ' . $minutos . 'min';
+                $duracao_formatada = $horas . 'h ' . round($minutos) . 'min';
             } elseif ($horas > 0) {
-                $duracao_formatada = $horas . 'h';  // Apenas horas
+                $duracao_formatada = $horas . 'h';
             } else {
-                $duracao_formatada = $minutos . 'min';  // Apenas minutos
+                $duracao_formatada = round($minutos) . 'min';
             }
 
             // Exibindo os dados do evento
@@ -305,7 +330,7 @@ function exibirEventos() {
             }
 
             // Botão "Saiba Mais"
-            echo '<button onclick="showDetails(\'' . addslashes($row['nome']) . '\', \'' . addslashes($caminho_imagem) . '\', \'' . date("d/m/Y", strtotime($row['data'])) . '\', \'' . addslashes($row['descricao']) . '\', \'' . addslashes($row['local']) . '\', \'' . date("H\hi", strtotime($row['hora'])) . '\', \'' . addslashes($row['lotacao']) . '\', \'' . addslashes($duracao_formatada) . '\', \'' . addslashes($row['faixa_etaria_desc']) . '\', \'' . addslashes($row['status_social_desc']) . '\', \'' . addslashes($row['status_evento_nome']) . '\', \'' . addslashes($row['escolaridade_desc']) . '\')">Saiba Mais →</button>';
+            echo '<button onmouseover="stopAutoSlide()" onmouseout="startAutoSlide()" onclick="showDetails(\'' . addslashes($row['nome']) . '\', \'' . addslashes($caminho_imagem) . '\', \'' . date("d/m/Y", strtotime($row['data'])) . '\', \'' . addslashes($row['descricao']) . '\', \'' . addslashes($row['local']) . '\', \'' . date("H\hi", strtotime($row['hora'])) . '\', \'' . addslashes($row['lotacao']) . '\', \'' . addslashes($duracao_formatada) . '\', \'' . addslashes($row['faixa_etaria_desc']) . '\', \'' . addslashes($row['status_social_desc']) . '\', \'' . addslashes($row['status_evento_nome']) . '\', \'' . addslashes($row['escolaridade_desc']) . '\')">Saiba Mais →</button>';
 
             echo '</div>';
             echo '</div>';
@@ -317,6 +342,8 @@ function exibirEventos() {
     return $totalEventos; // Retorna o total de eventos para o JavaScript
 }
 ?>
+
+
 <div class="eventos">
     <!-- Carrossel com 3 imagens -->
     <div class="carousel">
