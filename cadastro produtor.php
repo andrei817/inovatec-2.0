@@ -1,7 +1,8 @@
 <?php
-include ('php/Config.php');
+include('php/Config.php');
 
 $cadastroSucesso = false;
+$erroCadastro = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
@@ -9,24 +10,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefone = $_POST['telefone'];
     $senha = md5($_POST['senha']);  // Criptografar a senha com MD5
     $cpf = $_POST['cpf'];
-    $pergunta_seg = $_POST['pergunta_seg'];  // Pergunta de segurança
-    $resposta_seg = $_POST['resposta_seg'];  // Resposta de segurança
+    $pergunta_seg = $_POST['pergunta_seg'];
+    $resposta_seg = $_POST['resposta_seg'];
 
-    // Query de inserção com prepared statement
-    $sql = "INSERT INTO produtor (nome, email, telefone, senha, cpf, pergunta_seg, resposta_seg) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssss", $nome, $email, $telefone, $senha, $cpf, $pergunta_seg, $resposta_seg);
-$cadastroSucesso = true;
-    if ($stmt->execute()) {
-       
+    // Verificar se o produtor já está cadastrado (por email ou CPF)
+    $sqlCheck = "SELECT * FROM produtor WHERE email = ? OR cpf = ?";
+    $stmtCheck = $conn->prepare($sqlCheck);
+    $stmtCheck->bind_param("ss", $email, $cpf);
+    $stmtCheck->execute();
+    $resultCheck = $stmtCheck->get_result();
+
+    if ($resultCheck->num_rows > 0) {
+        // Produtor já cadastrado
+        $erroCadastro = true;
     } else {
-        echo "Erro: " . $stmt->error;
+        // Inserir novo produtor
+        $sql = "INSERT INTO produtor (nome, email, telefone, senha, cpf, pergunta_seg, resposta_seg) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssss", $nome, $email, $telefone, $senha, $cpf, $pergunta_seg, $resposta_seg);
+
+        if ($stmt->execute()) {
+            $cadastroSucesso = true;
+        } else {
+            echo "Erro: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 
-    $stmt->close();
-} 
+    $stmtCheck->close();
+}
 ?>
+
 
 
 
@@ -58,30 +74,39 @@ $cadastroSucesso = true;
 </div>
 
 <script> 
-    // Função para abrir a sidebar
-    function abrirSidebar() {
-     document.getElementById("mySidebar").style.width = "250px";
-   }
-   
-   // Função para fechar a sidebar
-   function fecharSidebar() {
-     document.getElementById("mySidebar").style.width = "0";
-   }
-   
-   // Função para abrir a sidebar
-   function abrirSidebar() {
-     // Se for um dispositivo móvel, ocupa 100% da tela; caso contrário, 250px
-     if (window.innerWidth <= 768) {
-         document.getElementById("mySidebar").style.width = "100%";
-     } else {
-         document.getElementById("mySidebar").style.width = "310px";
-     }
-   }
-   
-   // Função para fechar a sidebar
-   function fecharSidebar() {
-     document.getElementById("mySidebar").style.width = "0";
-   }
+     function abrirSidebar() {
+    if (window.innerWidth <= 768) {
+      document.getElementById("mySidebar").style.width = "100%";
+    } else {
+      document.getElementById("mySidebar").style.width = "310px";
+    }
+    // Adiciona a classe "aberto" à sidebar
+    document.getElementById("mySidebar").classList.add("aberto");
+  }
+
+  // Função para fechar a sidebar
+  function fecharSidebar() {
+    document.getElementById("mySidebar").style.width = "0";
+    // Remove a classe "aberto"
+    document.getElementById("mySidebar").classList.remove("aberto");
+  }
+
+  // Adiciona o evento para fechar ao clicar fora da sidebar
+  document.addEventListener('click', function (event) {
+    const sidebar = document.getElementById("mySidebar");
+    const isClickInsideSidebar = sidebar.contains(event.target);
+    const isClickOnButton = event.target.closest('.open-btn');
+
+    // Fecha a sidebar se o clique não for nela nem no botão de abrir
+    if (!isClickInsideSidebar && !isClickOnButton && sidebar.classList.contains("aberto")) {
+      fecharSidebar();
+    }
+  });
+
+  // Fecha a sidebar ao clicar nos links
+  document.querySelectorAll('#mySidebar a').forEach(link => {
+    link.addEventListener('click', fecharSidebar);
+  });
    </script>
 
 
@@ -199,9 +224,33 @@ $cadastroSucesso = true;
     // Exibe o modal se o cadastro foi bem-sucedido
     <?php if ($cadastroSucesso): ?>
         document.getElementById("modalSucesso").style.display = "flex";
-        // setTimeout(fecharModal, 3000); // Fecha automaticamente após 3 segundos
+         setTimeout(fecharModal, 3000); // Fecha automaticamente após 3 segundos
     <?php endif; ?>
 </script>
+
+
+<!-- Modal de Erro -->
+<div id="modalErro" class="modal-incorreto" style="display: none;">
+    <div class="modal-content-incorreto">
+        <span class="close-icon-incorreto" onclick="fecharModalErro()">&times;</span>
+        <h2>Erro ao Cadastrar!</h2>
+        <p>Esse produtor já está cadastrado no sistema.</p>
+        <img src="erro2.png" class="erro-img">
+    </div>
+</div>
+
+<script>
+    // Função para fechar o modal de erro
+    function fecharModalErro() {
+        document.getElementById("modalErro").style.display = "none";
+    }
+
+    // Exibe o modal de erro se o cadastro falhou por duplicidade
+    <?php if ($erroCadastro): ?>
+        document.getElementById("modalErro").style.display = "flex";
+    <?php endif; ?>
+</script>
+
 
 
 
@@ -236,6 +285,10 @@ function validatePasswords() {
 
     <script src="login.js"> </script>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+<script> $('#cpf').mask('000.000.000-00', {reverse: true}); </script>
+<script> $('#telefone').mask('(00) 00000-0000'); </script>
            
 </body>
 </html>
