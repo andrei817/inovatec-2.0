@@ -196,6 +196,21 @@ nav ul li a:hover::after {
     display: flex; flex-direction: column;
 }
 
+.nome-produtor h1 {
+    font-size: 27px;
+    margin: 20px 0;
+    top: -40px;
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    color: rgb(255, 255, 255);
+    margin-left: 10px;
+    position: relative;
+    background-color: #5214Cb; 
+    display: inline; 
+    border-radius: 15px; 
+}
+
 table {
     width: 70%;
     border-collapse: collapse;
@@ -379,7 +394,7 @@ h3 {
     background-color: rgba(0, 0, 0, 0.6);
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 1000;
 }
 
 .modal-content-delete {
